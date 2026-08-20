@@ -5,6 +5,7 @@ import { Header } from "@/components/layout/Header";
 import { MotionProvider } from "@/components/providers/MotionProvider";
 import { SmoothScroll } from "@/components/providers/SmoothScroll";
 import { profile } from "@/data/profile";
+import { getSiteUrl } from "@/lib/site-url";
 import "./globals.css";
 
 const sans = Instrument_Sans({
@@ -25,8 +26,7 @@ const mono = JetBrains_Mono({
   display: "swap",
 });
 
-const siteUrl =
-  process.env.NEXT_PUBLIC_SITE_URL ?? "https://alexisromney.vercel.app";
+const siteUrl = getSiteUrl();
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
