@@ -1,11 +1,16 @@
 "use client";
 
+import { useState } from "react";
 import { profile } from "@/data/profile";
+import { ContactModal } from "@/components/contact/ContactModal";
+import { Button } from "@/components/ui/Button";
 import { ButtonLink } from "@/components/ui/ButtonLink";
+import { ProfilePhoto } from "@/components/ui/ProfilePhoto";
 import { Reveal } from "@/components/ui/Reveal";
 
 export function Contact() {
-  const hasEmail = Boolean(profile.email);
+  const [open, setOpen] = useState(false);
+  const hasOrigin = Boolean(profile.githubOrigin);
 
   return (
     <section
@@ -18,6 +23,9 @@ export function Contact() {
       />
       <div className="relative mx-auto max-w-4xl text-center">
         <Reveal>
+          <div className="mb-8 flex justify-center">
+            <ProfilePhoto size="lg" />
+          </div>
           <p className="mb-4 font-mono text-[0.7rem] uppercase tracking-[0.28em] text-[var(--accent)]">
             Contact
           </p>
@@ -29,31 +37,32 @@ export function Contact() {
             Parlons de votre besoin métier et de la solution à mettre en place.
           </p>
           <div className="mt-10 flex flex-wrap items-center justify-center gap-3">
-            {hasEmail ? (
-              <ButtonLink href={`mailto:${profile.email}`}>
-                Écrire à {profile.email}
+            <Button type="button" onClick={() => setOpen(true)}>
+              Me contacter
+            </Button>
+            {hasOrigin ? (
+              <ButtonLink
+                href={profile.githubOrigin}
+                variant="outline"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                GitHub — Origin
               </ButtonLink>
-            ) : (
-              <ButtonLink href={profile.github} target="_blank" rel="noopener noreferrer">
-                Me trouver sur GitHub
-              </ButtonLink>
-            )}
+            ) : null}
             <ButtonLink
-              href={profile.githubPortfolio}
+              href={profile.linkedin}
               variant="outline"
               target="_blank"
               rel="noopener noreferrer"
             >
-              Repository Portfolio
+              LinkedIn
             </ButtonLink>
           </div>
-          {!hasEmail ? (
-            <p className="mt-6 text-sm text-[var(--steel)]">
-              Ajoutez votre e-mail dans <code className="text-[var(--muted)]">src/data/profile.ts</code> pour activer le mailto.
-            </p>
-          ) : null}
         </Reveal>
       </div>
+
+      <ContactModal open={open} onClose={() => setOpen(false)} />
     </section>
   );
 }

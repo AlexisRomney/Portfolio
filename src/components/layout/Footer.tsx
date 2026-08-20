@@ -2,6 +2,7 @@ import { profile } from "@/data/profile";
 
 export function Footer() {
   const year = new Date().getFullYear();
+  const hasOrigin = Boolean(profile.githubOrigin);
 
   return (
     <footer className="border-t border-white/8 px-5 py-10 sm:px-8 lg:px-16">
@@ -9,17 +10,27 @@ export function Footer() {
         <div>
           <p className="font-display text-lg text-[var(--paper)]">{profile.name}</p>
           <p className="mt-1 text-sm text-[var(--muted)]">
-            Portfolio public — les autres repositories restent privés.
+            Digitalisation · Automatisation · IA
           </p>
         </div>
         <div className="flex flex-wrap gap-5 text-sm text-[var(--muted)]">
+          {hasOrigin ? (
+            <a
+              href={profile.githubOrigin}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="transition-colors hover:text-[var(--accent)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--accent)]"
+            >
+              GitHub — Origin
+            </a>
+          ) : null}
           <a
-            href={profile.githubPortfolio}
+            href={profile.linkedin}
             target="_blank"
             rel="noopener noreferrer"
             className="transition-colors hover:text-[var(--accent)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--accent)]"
           >
-            GitHub Portfolio
+            LinkedIn
           </a>
           <a
             href={profile.github}
@@ -27,7 +38,7 @@ export function Footer() {
             rel="noopener noreferrer"
             className="transition-colors hover:text-[var(--accent)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--accent)]"
           >
-            Profil GitHub
+            GitHub
           </a>
           <span>© {year}</span>
         </div>
