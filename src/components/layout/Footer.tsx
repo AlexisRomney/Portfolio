@@ -1,4 +1,5 @@
 import { profile } from "@/data/profile";
+import { GitHubIcon, LinkedInIcon } from "@/components/icons/SocialIcons";
 
 export function Footer() {
   const year = new Date().getFullYear();
@@ -13,7 +14,7 @@ export function Footer() {
             Digitalisation · Automatisation · IA
           </p>
         </div>
-        <div className="flex flex-wrap gap-5 text-sm text-[var(--muted)]">
+        <div className="flex flex-wrap items-center gap-5 text-sm text-[var(--muted)]">
           {hasOrigin ? (
             <a
               href={profile.githubOrigin}
@@ -28,16 +29,20 @@ export function Footer() {
             href={profile.linkedin}
             target="_blank"
             rel="noopener noreferrer"
-            className="transition-colors hover:text-[var(--accent)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--accent)]"
+            aria-label="LinkedIn"
+            className="inline-flex items-center gap-2 transition-colors hover:text-[var(--accent)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--accent)]"
           >
+            <LinkedInIcon className="h-4 w-4" />
             LinkedIn
           </a>
           <a
             href={profile.github}
             target="_blank"
             rel="noopener noreferrer"
-            className="transition-colors hover:text-[var(--accent)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--accent)]"
+            aria-label="GitHub"
+            className="inline-flex items-center gap-2 transition-colors hover:text-[var(--accent)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--accent)]"
           >
+            <GitHubIcon className="h-4 w-4" />
             GitHub
           </a>
           <span>© {year}</span>

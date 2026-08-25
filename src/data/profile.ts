@@ -1,46 +1,72 @@
+/**
+ * Parcours professionnel — uniquement des éléments publics vérifiables.
+ * Ne pas inventer d’expérience, diplôme ou responsabilité.
+ */
+
 export const profile = {
   name: "Alexis Romney",
-  role: "Digitalisation · Automatisation · IA",
+  role: "Chef de Projet IT / Business Analyst · Digitalisation · Automatisation · IA",
   tagline:
     "Je transforme les besoins métier en solutions numériques automatisées, intelligentes et déployables.",
   shortBio:
     "Consultant et développeur orienté impact : comprendre le processus, concevoir l’outil, automatiser les flux, intégrer l’IA, puis livrer.",
-  location: "France",
+  location: "La Réunion · France",
   availability: "Ouvert aux missions",
   /**
    * Photo de profil (optionnelle).
    * Placer le fichier dans `public/brand/profile.jpg` puis renseigner le chemin.
-   * Formats recommandés : JPG/WebP, 800×800 minimum, visage centré, fond neutre.
    */
   photo: "" as string,
-  /** Mettre à jour ici — une seule source pour le CTA contact mailto de secours */
   email: "" as string,
   github: "https://github.com/AlexisRomney",
-  /**
-   * Lien vers le projet / repository Origin.
-   * Laisser vide tant que l’URL réelle n’est pas connue — ne pas inventer.
-   */
   githubOrigin: "" as string,
   linkedin: "https://www.linkedin.com/in/alexis-romney/",
 } as const;
 
-export const journey = [
+export type JourneyItem = {
+  kind: "formation" | "experience" | "evolution" | "projects";
+  title: string;
+  period: string;
+  org?: string;
+  description: string;
+};
+
+export const journey: JourneyItem[] = [
   {
-    title: "Solutions métier & automatisation",
+    kind: "formation",
+    title: "Master — Computer Engineering",
+    period: "2015 — 2020",
+    org: "SUPINFO International University",
+    description:
+      "Formation d’ingénierie informatique : bases solides pour concevoir, développer et faire évoluer des systèmes d’information.",
+  },
+  {
+    kind: "experience",
+    title: "Développement & systèmes d’information",
+    period: "2020 — 2023",
+    description:
+      "Parcours en développement d’applications et environnements SI (notamment Alteca, Air France Fast Track, Omnisoft) — du code aux usages métier.",
+  },
+  {
+    kind: "experience",
+    title: "Processus, formation & coordination IT",
+    period: "2023 — aujourd’hui",
+    org: "Groupe GHANTY · Saint-Louis, La Réunion",
+    description:
+      "Coordination de projets IT et formation sur les process : Chargé de processus et de formation, puis Assistant de projet Méthodes et Process.",
+  },
+  {
+    kind: "evolution",
+    title: "Digitalisation · Automatisation · IA appliquée",
     period: "Aujourd’hui",
     description:
-      "Conception et développement d’outils qui digitalisent les processus : analyse des demandes, orchestration, IA et déploiement.",
+      "Évolution naturelle vers des solutions qui digitalisent les processus métiers : analyse des demandes, orchestration, automatisation et IA utile au quotidien.",
   },
   {
-    title: "Produits numériques & plateformes",
-    period: "Récent",
-    description:
-      "Applications web orientées usage réel — e-commerce, association, stockage intelligent — du besoin à la mise en ligne.",
-  },
-  {
-    title: "Outils techniques & optimisation",
+    kind: "projects",
+    title: "Projets personnels & livrables",
     period: "Continu",
     description:
-      "Automatisation système, scripts, diagnostic et expérience utilisateur pour améliorer les performances au quotidien.",
+      "Applications web, outils métier, optimisation système et expérimentations IA — du besoin métier à la mise en production.",
   },
-] as const;
+];

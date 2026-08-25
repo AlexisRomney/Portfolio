@@ -4,6 +4,7 @@ import { FeaturedAI } from "@/components/sections/FeaturedAI";
 import { Hero } from "@/components/sections/Hero";
 import { Journey } from "@/components/sections/Journey";
 import { Positioning } from "@/components/sections/Positioning";
+import { Presence } from "@/components/sections/Presence";
 import { ProjectManagement } from "@/components/sections/ProjectManagement";
 import { Projects } from "@/components/sections/Projects";
 import { TechStack } from "@/components/sections/TechStack";
@@ -21,6 +22,7 @@ export default function Home() {
       <ProjectManagement />
       <Journey />
       <TechStack />
+      <Presence />
       <Contact />
     </main>
   );

@@ -19,6 +19,13 @@ const nextConfig: NextConfig = {
   turbopack: {
     root: projectRoot,
   },
+  /**
+   * Serve images as-is — do not consume Vercel Image Optimization
+   * Transformations. Files under /public are already sized for the site.
+   */
+  images: {
+    unoptimized: true,
+  },
 };
 
 export default nextConfig;

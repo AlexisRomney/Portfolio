@@ -5,6 +5,7 @@ import { useReducedMotion } from "motion/react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { getFeaturedProject } from "@/data/projects";
+import { MockupFrame } from "@/components/ui/MockupFrame";
 import { Reveal } from "@/components/ui/Reveal";
 
 const pipeline = [
@@ -50,6 +51,7 @@ export function FeaturedAI() {
   }, [project, reduce]);
 
   if (!project) return null;
+  const visual = project.visuals[0];
 
   return (
     <section
@@ -91,6 +93,14 @@ export function FeaturedAI() {
           </ol>
         </div>
 
+        {visual ? (
+          <Reveal delay={0.08}>
+            <div className="mt-14">
+              <MockupFrame visual={visual} priority className="mx-auto max-w-5xl" />
+            </div>
+          </Reveal>
+        ) : null}
+
         <div className="mt-16 grid gap-10 lg:grid-cols-[1.1fr_0.9fr]">
           <Reveal delay={0.1}>
             <div className="space-y-8">
@@ -107,27 +117,25 @@ export function FeaturedAI() {
                 className="absolute -right-10 -top-10 h-40 w-40 rounded-full bg-[color-mix(in_oklab,var(--accent)_18%,transparent)] blur-2xl"
               />
               <p className="font-mono text-[0.65rem] uppercase tracking-[0.24em] text-[var(--steel)]">
-                Emplacement démo
+                Démonstration
               </p>
               <h3 className="mt-4 font-display text-2xl text-[var(--paper)]">
-                Démonstration à venir
+                Bientôt disponible
               </h3>
               <p className="mt-3 text-sm leading-relaxed text-[var(--muted)]">
-                L’application n’est pas encore hébergée publiquement (attente
-                retours Oracle Cloud). Screenshots, vidéo et lien de démo seront
-                ajoutés ici dès la mise en ligne — sans URL inventée.
+                L’application n’est pas encore hébergée publiquement. Le bouton
+                « Voir la démonstration » sera activé dès la mise en ligne —
+                sans URL inventée.
               </p>
-              <div className="mt-8 aspect-[16/10] rounded-xl border border-dashed border-white/15 bg-[linear-gradient(145deg,rgba(255,255,255,0.04),transparent)]">
-                <div className="flex h-full flex-col items-center justify-center gap-2 px-6 text-center">
-                  <span className="font-mono text-[0.65rem] uppercase tracking-[0.2em] text-[var(--steel)]">
-                    Mockup / capture
+              <div className="mt-8">
+                <span className="inline-flex cursor-default items-center gap-2 rounded-full border border-white/12 bg-white/[0.03] px-5 py-2.5 text-sm text-[var(--steel)]">
+                  {project.demoLabel ?? "Voir la démonstration"}
+                  <span className="font-mono text-[0.6rem] uppercase tracking-[0.16em] text-[var(--accent)]">
+                    Soon
                   </span>
-                  <span className="text-sm text-[var(--muted)]">
-                    Zone réservée aux visuels du produit
-                  </span>
-                </div>
+                </span>
               </div>
-              <p className="mt-6 text-sm text-[var(--muted)]">
+              <p className="mt-8 text-sm text-[var(--muted)]">
                 <span className="text-[var(--paper)]">Rôle — </span>
                 {project.role}
               </p>

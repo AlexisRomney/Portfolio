@@ -1,6 +1,7 @@
 "use client";
 
 import { getProject } from "@/data/projects";
+import { MockupFrame } from "@/components/ui/MockupFrame";
 import { Reveal } from "@/components/ui/Reveal";
 import { Section } from "@/components/ui/Section";
 
@@ -17,6 +18,8 @@ export function WindowsOptimizer() {
   const project = getProject("optimiseur-windows");
   if (!project) return null;
 
+  const [primary, ...rest] = project.visuals;
+
   return (
     <Section
       id="optimiseur"
@@ -24,37 +27,17 @@ export function WindowsOptimizer() {
       title={project.name}
       description={project.summary}
     >
-      <div className="grid items-stretch gap-10 lg:grid-cols-[0.95fr_1.05fr]">
+      <div className="grid items-start gap-12 lg:grid-cols-[1.05fr_0.95fr]">
         <Reveal>
-          <div className="relative overflow-hidden rounded-2xl border border-white/10 bg-[var(--surface)] p-1">
-            <div className="rounded-[0.9rem] bg-[linear-gradient(160deg,#12161d_0%,#0b0e13_55%,#151a22_100%)] p-6 sm:p-8">
-              <div className="mb-6 flex items-center gap-2">
-                <span className="h-2.5 w-2.5 rounded-full bg-[#ff5f57]" />
-                <span className="h-2.5 w-2.5 rounded-full bg-[#febc2e]" />
-                <span className="h-2.5 w-2.5 rounded-full bg-[#28c840]" />
-                <span className="ml-3 font-mono text-[0.65rem] uppercase tracking-[0.18em] text-[var(--steel)]">
-                  Wizard · Windows
-                </span>
-              </div>
-              <div className="space-y-3">
-                {capabilities.map((item, i) => (
-                  <div
-                    key={item}
-                    className="flex items-center justify-between rounded-lg border border-white/8 bg-white/[0.03] px-4 py-3"
-                  >
-                    <span className="text-sm text-[var(--paper)]">{item}</span>
-                    <span className="font-mono text-[0.65rem] text-[var(--accent)]">
-                      {String(i + 1).padStart(2, "0")}
-                    </span>
-                  </div>
-                ))}
-              </div>
-            </div>
-          </div>
+          {primary ? (
+            <MockupFrame visual={primary} priority />
+          ) : (
+            <div className="aspect-[16/10] rounded-2xl border border-white/10 bg-[var(--surface)]" />
+          )}
         </Reveal>
 
         <Reveal delay={0.12}>
-          <div className="flex h-full flex-col justify-center space-y-8">
+          <div className="flex h-full flex-col justify-center space-y-8 lg:pt-4">
             <div>
               <h3 className="font-mono text-[0.65rem] uppercase tracking-[0.24em] text-[var(--accent)]">
                 Problème
@@ -69,9 +52,18 @@ export function WindowsOptimizer() {
             </div>
             <div>
               <h3 className="font-mono text-[0.65rem] uppercase tracking-[0.24em] text-[var(--accent)]">
-                Résultat
+                Capabilités
               </h3>
-              <p className="mt-3 text-[var(--muted)]">{project.result}</p>
+              <ul className="mt-4 grid gap-2 sm:grid-cols-2">
+                {capabilities.map((item) => (
+                  <li
+                    key={item}
+                    className="rounded-lg border border-white/8 bg-white/[0.03] px-3 py-2.5 text-sm text-[var(--paper)]"
+                  >
+                    {item}
+                  </li>
+                ))}
+              </ul>
             </div>
             <ul className="flex flex-wrap gap-2">
               {project.technologies.map((tech) => (
@@ -84,11 +76,22 @@ export function WindowsOptimizer() {
               ))}
             </ul>
             <p className="text-sm text-[var(--steel)]">
-              Démonstration desktop privée — pas d’URL publique inventée.
+              Application desktop — démonstration privée, pas d’URL publique
+              inventée.
             </p>
           </div>
         </Reveal>
       </div>
+
+      {rest.length > 0 ? (
+        <div className="mt-12 grid gap-5 sm:grid-cols-2">
+          {rest.map((visual, i) => (
+            <Reveal key={visual.src} delay={0.08 + i * 0.06}>
+              <MockupFrame visual={visual} />
+            </Reveal>
+          ))}
+        </div>
+      ) : null}
     </Section>
   );
 }

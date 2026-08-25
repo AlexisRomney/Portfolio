@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { profile } from "@/data/profile";
 import { ContactModal } from "@/components/contact/ContactModal";
+import { GitHubIcon, LinkedInIcon } from "@/components/icons/SocialIcons";
 import { Button } from "@/components/ui/Button";
 import { ButtonLink } from "@/components/ui/ButtonLink";
 import { ProfilePhoto } from "@/components/ui/ProfilePhoto";
@@ -55,8 +56,20 @@ export function Contact() {
               variant="outline"
               target="_blank"
               rel="noopener noreferrer"
+              className="inline-flex items-center gap-2"
             >
+              <LinkedInIcon className="h-4 w-4" />
               LinkedIn
+            </ButtonLink>
+            <ButtonLink
+              href={profile.github}
+              variant="outline"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2"
+            >
+              <GitHubIcon className="h-4 w-4" />
+              GitHub
             </ButtonLink>
           </div>
         </Reveal>

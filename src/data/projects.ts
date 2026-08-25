@@ -1,12 +1,22 @@
 /**
  * Source unique des projets du portfolio.
- * Modifier les URLs ici uniquement — jamais en dur dans les composants.
+ * Modifier URLs, titres, descriptions, images et statut ici uniquement.
  *
- * Règle : ce fichier décrit des réalisations publiques.
+ * Règle : réalisations publiques uniquement.
  * Aucun code source, secret ou configuration privée des autres repos.
  */
 
 export type ProjectStatus = "live" | "coming-soon" | "private-demo";
+
+export type ProjectVisual = {
+  src: string;
+  alt: string;
+  /** Dimensions natives du fichier — pour conserver le ratio exact */
+  width: number;
+  height: number;
+  /** Cadre de présentation */
+  frame?: "browser" | "window" | "plain";
+};
 
 export type Project = {
   id: string;
@@ -20,10 +30,18 @@ export type Project = {
   technologies: string[];
   /** URL publique de démonstration — null si non disponible */
   demoUrl: string | null;
+  /** Libellé du CTA démo (défaut : Voir la démonstration) */
+  demoLabel?: string;
   status: ProjectStatus;
+  /**
+   * Visibilité publique. `false` = masqué partout, conservé pour réactivation.
+   */
+  published: boolean;
   featured?: boolean;
   highlight?: boolean;
   visualTone: "ai" | "product" | "system" | "commerce" | "community";
+  /** Captures pour mockups — chemins sous /public */
+  visuals: ProjectVisual[];
 };
 
 export const projects: Project[] = [
@@ -50,10 +68,21 @@ export const projects: Project[] = [
       "Resend",
     ],
     demoUrl: null,
+    demoLabel: "Voir la démonstration",
     status: "coming-soon",
+    published: true,
     featured: true,
     highlight: true,
     visualTone: "ai",
+    visuals: [
+      {
+        src: "/mockups/assistant-demandes-dashboard.webp",
+        alt: "Tableau de bord Assistant IA — KPIs, catégorisation et routage des demandes",
+        width: 1024,
+        height: 430,
+        frame: "browser",
+      },
+    ],
   },
   {
     id: "optimiseur-windows",
@@ -71,8 +100,32 @@ export const projects: Project[] = [
     technologies: [".NET", "WinForms", "PowerShell", "Windows APIs"],
     demoUrl: null,
     status: "private-demo",
+    published: true,
     highlight: true,
     visualTone: "system",
+    visuals: [
+      {
+        src: "/mockups/optimiseur-accueil.webp",
+        alt: "Écran d’accueil Optimiseur Windows — parcours guidé",
+        width: 897,
+        height: 617,
+        frame: "window",
+      },
+      {
+        src: "/mockups/optimiseur-processus.webp",
+        alt: "Analyse des processus en arrière-plan",
+        width: 1024,
+        height: 512,
+        frame: "window",
+      },
+      {
+        src: "/mockups/optimiseur-nettoyage.webp",
+        alt: "Étape de nettoyage Windows avec commande contrôlée",
+        width: 1024,
+        height: 514,
+        frame: "window",
+      },
+    ],
   },
   {
     id: "memo-etudiant",
@@ -90,7 +143,17 @@ export const projects: Project[] = [
     technologies: ["Web", "E-commerce", "UX"],
     demoUrl: "https://memoetudiant.com/",
     status: "live",
+    published: true,
     visualTone: "commerce",
+    visuals: [
+      {
+        src: "/mockups/memo-etudiant-produits.webp",
+        alt: "Catalogue Mémo Étudiant — packs et fiches de révision",
+        width: 1024,
+        height: 458,
+        frame: "browser",
+      },
+    ],
   },
   {
     id: "mailvault",
@@ -108,7 +171,17 @@ export const projects: Project[] = [
     technologies: ["React", "Vite", "Neon", "OAuth", "Gmail API"],
     demoUrl: "https://mailvault-your-personal-cloud.vercel.app/",
     status: "live",
+    published: true,
     visualTone: "product",
+    visuals: [
+      {
+        src: "/mockups/mailvault-bibliotheque.webp",
+        alt: "Bibliothèque MailVault — images, documents, audio et liens",
+        width: 1024,
+        height: 466,
+        frame: "browser",
+      },
+    ],
   },
   {
     id: "association-afa",
@@ -124,9 +197,19 @@ export const projects: Project[] = [
       "Une vitrine professionnelle ancrée localement, prête à accueillir et orienter les publics.",
     role: "Refonte & développement web",
     technologies: ["Next.js", "TypeScript", "Tailwind CSS"],
-    demoUrl: "https://association-afa.vercel.app/",
+    demoUrl: "https://www.afa.re/",
     status: "live",
+    published: true,
     visualTone: "community",
+    visuals: [
+      {
+        src: "/mockups/association-afa-home.webp",
+        alt: "Page d’accueil Association A.F.A. — Agir, Former, Accompagner",
+        width: 1024,
+        height: 435,
+        frame: "browser",
+      },
+    ],
   },
   {
     id: "lbc-africa",
@@ -139,50 +222,97 @@ export const projects: Project[] = [
     solution:
       "Application web marketplace avec parcours catalogue et architecture prête pour itérations produit.",
     result:
-      "Base produit déployée, évolutive selon les retours marché.",
+      "Base produit en préparation — publication dès mise en ligne officielle.",
     role: "Développement plateforme",
-    technologies: ["Web", "Marketplace", "Vercel"],
-    demoUrl: "https://vercel.com/alexis-romney/lbc-africa-marketplace",
-    status: "live",
+    technologies: ["Web", "Marketplace"],
+    demoUrl: null,
+    status: "coming-soon",
+    /** Masqué tant que le site n’est pas en ligne — passer à true pour réactiver */
+    published: false,
     visualTone: "commerce",
+    visuals: [],
   },
   {
     id: "gestion-projet",
     name: "Outil de gestion de projet",
-    eyebrow: "Prochainement",
+    eyebrow: "Prochainement · Agile & Classique",
     summary:
-      "Espace réservé pour présenter un outil de gestion de projet — captures, stack et démo à venir.",
+      "Espace de pilotage projets : tableaux de bord, listes, kanban, tâches et collaboration — en cours de finalisation.",
     problem:
-      "Structurer le suivi de projets et la collaboration autour des livrables.",
+      "Structurer le suivi de projets, les échéances et la collaboration autour des livrables.",
     solution:
-      "Présentation en cours de préparation. Screenshots, technologies et lien de démonstration seront ajoutés ici.",
-    result: "Section prête à accueillir le contenu dès que le produit est présentable.",
-    role: "Conception & développement",
-    technologies: ["À venir"],
+      "Application web avec modèles Agile / Classique, gestion des projets, board kanban, fiches tâches et administration.",
+    result:
+      "Présentation visuelle déjà prête ; démonstration publique à venir lorsque le produit sera stabilisé.",
+    role: "Conception produit & développement",
+    technologies: ["Web", "Kanban", "Gestion de projet"],
     demoUrl: null,
     status: "coming-soon",
+    published: true,
     visualTone: "product",
+    visuals: [
+      {
+        src: "/mockups/gestion-projet-accueil.webp",
+        alt: "Accueil Gestionnaire de projet — projets et échéances",
+        width: 1024,
+        height: 470,
+        frame: "browser",
+      },
+      {
+        src: "/mockups/gestion-projet-liste.webp",
+        alt: "Liste Mes projets — cartes Agile et Classique",
+        width: 1024,
+        height: 460,
+        frame: "browser",
+      },
+      {
+        src: "/mockups/gestion-projet-kanban.webp",
+        alt: "Board kanban Marketplace CA — stories, to do, test, done",
+        width: 1024,
+        height: 461,
+        frame: "browser",
+      },
+      {
+        src: "/mockups/gestion-projet-tache.webp",
+        alt: "Fiche tâche détaillée avec description et commentaires",
+        width: 1024,
+        height: 462,
+        frame: "browser",
+      },
+    ],
   },
 ];
 
+export function getPublishedProjects() {
+  return projects.filter((p) => p.published);
+}
+
 export function getProject(id: string) {
+  return getPublishedProjects().find((p) => p.id === id);
+}
+
+/** Accès brut (y compris non publiés) — pour maintenance / réactivation */
+export function getProjectRaw(id: string) {
   return projects.find((p) => p.id === id);
 }
 
 export function getFeaturedProject() {
-  return projects.find((p) => p.featured);
+  return getPublishedProjects().find((p) => p.featured);
 }
 
 export function getHighlightedProjects() {
-  return projects.filter((p) => p.highlight);
+  return getPublishedProjects().filter((p) => p.highlight);
 }
 
 export function getShowcaseProjects() {
-  return projects.filter(
-    (p) => !p.featured && p.id !== "gestion-projet" && p.id !== "optimiseur-windows",
+  return getPublishedProjects().filter(
+    (p) =>
+      !p.featured &&
+      p.id !== "gestion-projet" &&
+      p.id !== "optimiseur-windows",
   );
 }
 
 export function getComingSoonProjects() {
-  return projects.filter((p) => p.id === "gestion-projet");
+  return getPublishedProjects().filter((p) => p.id === "gestion-projet");
 }
