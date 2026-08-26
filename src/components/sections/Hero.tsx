@@ -79,7 +79,7 @@ export function Hero() {
             transition={{ duration: 0.7, delay: 0.75, ease: easeOut }}
             className="mt-10 flex flex-wrap gap-3"
           >
-            <ButtonLink href="#projet-phare">Voir le projet phare</ButtonLink>
+            <ButtonLink href="#projets">Voir mes projets</ButtonLink>
             <ButtonLink href="#contact" variant="outline">
               Me contacter
             </ButtonLink>
@@ -95,10 +95,10 @@ export function Hero() {
           <p className="text-sm leading-relaxed text-[var(--muted)]">{profile.shortBio}</p>
           <ul className="mt-8 space-y-3">
             {[
-              "Besoin métier → solution",
-              "Automatisation & workflows",
-              "IA intégrée au processus",
-              "Développement & déploiement",
+              "Un site vitrine, simplement",
+              "Une automatisation adaptée au besoin",
+              "Ou une solution plus complète si utile",
+              "Toujours partir du besoin, pas de la techno",
             ].map((item, i) => (
               <motion.li
                 key={item}

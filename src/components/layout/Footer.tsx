@@ -11,7 +11,7 @@ export function Footer() {
         <div>
           <p className="font-display text-lg text-[var(--paper)]">{profile.name}</p>
           <p className="mt-1 text-sm text-[var(--muted)]">
-            Digitalisation · Automatisation · IA
+            Création Web · Automatisation · IA
           </p>
         </div>
         <div className="flex flex-wrap items-center gap-5 text-sm text-[var(--muted)]">

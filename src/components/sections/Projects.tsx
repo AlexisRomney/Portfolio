@@ -17,7 +17,7 @@ export function Projects() {
       tone="muted"
       eyebrow="Réalisations"
       title="Produits livrés & études de cas"
-      description="Des réalisations concrètes : problème, solution, technologies — présentées comme une vitrine, pas une liste de liens."
+      description="Réalisations web, automatisation et IA — parfois séparées, parfois combinées — pour illustrer la diversité des solutions possibles."
     >
       <div className="flex flex-col gap-8">
         {items.map((project, i) => (

@@ -32,6 +32,8 @@ export type Project = {
   demoUrl: string | null;
   /** Libellé du CTA démo (défaut : Voir la démonstration) */
   demoLabel?: string;
+  /** Repository GitHub public (optionnel) */
+  repoUrl?: string | null;
   status: ProjectStatus;
   /**
    * Visibilité publique. `false` = masqué partout, conservé pour réactivation.
@@ -247,6 +249,7 @@ export const projects: Project[] = [
     role: "Conception produit & développement",
     technologies: ["Web", "Kanban", "Gestion de projet"],
     demoUrl: null,
+    repoUrl: "https://github.com/AlexisRomney/gestion-projet",
     status: "coming-soon",
     published: true,
     visualTone: "product",
@@ -277,6 +280,13 @@ export const projects: Project[] = [
         alt: "Fiche tâche détaillée avec description et commentaires",
         width: 1024,
         height: 462,
+        frame: "browser",
+      },
+      {
+        src: "/mockups/gestion-projet-edit.webp",
+        alt: "Formulaire de modification d’un projet",
+        width: 1024,
+        height: 468,
         frame: "browser",
       },
     ],

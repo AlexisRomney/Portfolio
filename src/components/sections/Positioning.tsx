@@ -1,56 +1,145 @@
 "use client";
 
-import { Reveal } from "@/components/ui/Reveal";
+import { useEffect, useRef } from "react";
+import { motion, useReducedMotion } from "motion/react";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { Section } from "@/components/ui/Section";
+import { easeOut } from "@/lib/motion";
 
-const steps = [
+const solutionDomains = [
   {
-    n: "01",
-    title: "Comprendre",
-    text: "Analyser le besoin métier, les contraintes et les frictions du processus réel.",
+    id: "sites",
+    title: "Sites web",
+    items: "Vitrine · Institutionnel · E-commerce",
   },
   {
-    n: "02",
-    title: "Concevoir",
-    text: "Définir une solution claire : parcours, données, règles et expérience utilisateur.",
+    id: "solutions",
+    title: "Solutions numériques",
+    items: "Applications · Fonctionnalités sur mesure",
   },
   {
-    n: "03",
-    title: "Automatiser",
-    text: "Orchestrer les flux, intégrer l’IA utile et supprimer le travail répétitif.",
+    id: "automation",
+    title: "Automatisation & IA",
+    items: "Automatisation · Intelligence artificielle · Digitalisation",
   },
-  {
-    n: "04",
-    title: "Déployer",
-    text: "Livrer un outil fiable, mesurable et prêt à évoluer avec l’organisation.",
-  },
-];
+] as const;
 
 export function Positioning() {
+  const reduce = useReducedMotion();
+  const stageRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (reduce || !stageRef.current) return;
+    gsap.registerPlugin(ScrollTrigger);
+    const ctx = gsap.context(() => {
+      const intro = stageRef.current?.querySelector("[data-axis-converge]");
+      const cards = stageRef.current?.querySelectorAll("[data-domain-card]");
+
+      if (intro) {
+        gsap.fromTo(
+          intro,
+          { y: 28, opacity: 0 },
+          {
+            y: 0,
+            opacity: 1,
+            ease: "none",
+            scrollTrigger: {
+              trigger: stageRef.current,
+              start: "top 75%",
+              end: "center 55%",
+              scrub: 0.55,
+            },
+          },
+        );
+      }
+
+      if (cards?.length) {
+        gsap.fromTo(
+          cards,
+          { y: 24, opacity: 0 },
+          {
+            y: 0,
+            opacity: 1,
+            stagger: 0.08,
+            ease: "none",
+            scrollTrigger: {
+              trigger: stageRef.current,
+              start: "top 60%",
+              end: "center 40%",
+              scrub: 0.5,
+            },
+          },
+        );
+      }
+    }, stageRef);
+
+    return () => ctx.revert();
+  }, [reduce]);
+
   return (
     <Section
       id="positionnement"
       eyebrow="Positionnement"
-      title="Du besoin métier à la solution automatisée"
-      description="Je ne me limite pas à l’interface. Je construis des systèmes qui comprennent le contexte, automatisent les décisions répétitives et s’intègrent au quotidien des équipes."
+      title="Le besoin d’abord. La solution ensuite."
+      description="Pas de solution préfabriquée. Chaque projet commence par un besoin et évolue selon ce qui est réellement utile."
     >
-      <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-        {steps.map((step, i) => (
-          <Reveal key={step.n} delay={i * 0.08}>
-            <article className="group h-full border-t border-white/12 pt-6 transition-colors hover:border-[var(--accent)]">
-              <p className="font-mono text-xs tracking-[0.2em] text-[var(--steel)]">
-                {step.n}
-              </p>
-              <h3 className="mt-4 font-display text-2xl tracking-tight text-[var(--paper)]">
-                {step.title}
-              </h3>
-              <p className="mt-3 text-sm leading-relaxed text-[var(--muted)]">
-                {step.text}
-              </p>
-            </article>
-          </Reveal>
-        ))}
+      <div ref={stageRef} className="relative">
+        <div
+          data-axis-converge
+          className="relative overflow-hidden rounded-2xl border border-white/12 bg-[linear-gradient(160deg,rgba(255,255,255,0.05),transparent_60%)] px-6 py-8 text-center sm:px-10 sm:py-10"
+          style={reduce ? undefined : { opacity: 0 }}
+        >
+          <div
+            aria-hidden
+            className="pointer-events-none absolute inset-x-10 top-0 h-px bg-gradient-to-r from-transparent via-[var(--accent)]/50 to-transparent"
+          />
+          <h3 className="font-display text-[clamp(1.6rem,3.5vw,2.4rem)] tracking-tight text-[var(--paper)]">
+            Solutions numériques sur mesure
+          </h3>
+          <p className="mx-auto mt-5 max-w-2xl text-sm leading-relaxed text-[var(--muted)] sm:text-base">
+            Chaque projet est différent. Je pars du besoin pour construire une
+            solution adaptée : un site web, une fonctionnalité spécifique, une
+            automatisation ou une combinaison de plusieurs éléments lorsque cela
+            apporte une réelle valeur.
+          </p>
+        </div>
+
+        <ul className="mt-6 grid gap-4 sm:grid-cols-3 sm:gap-5">
+          {solutionDomains.map((domain) => (
+            <DomainCard key={domain.id} title={domain.title} items={domain.items} />
+          ))}
+        </ul>
       </div>
     </Section>
+  );
+}
+
+function DomainCard({ title, items }: { title: string; items: string }) {
+  const reduce = useReducedMotion();
+
+  return (
+    <motion.li
+      data-domain-card
+      whileHover={reduce ? undefined : { y: -4 }}
+      transition={{ duration: 0.35, ease: easeOut }}
+      className="group relative list-none overflow-hidden rounded-2xl border border-white/12 bg-white/[0.02] p-6 text-left transition-[border-color] duration-300 hover:border-[var(--accent)]/45 sm:p-7"
+      style={reduce ? undefined : { opacity: 0 }}
+    >
+      <div
+        aria-hidden
+        className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-[var(--accent)]/35 to-transparent opacity-70"
+      />
+      <div
+        aria-hidden
+        className="pointer-events-none absolute -right-8 -top-8 h-28 w-28 rounded-full bg-[color-mix(in_oklab,var(--accent)_10%,transparent)] blur-2xl transition-opacity duration-500 group-hover:opacity-100"
+      />
+      <h4 className="font-display text-xl tracking-tight text-[var(--paper)] sm:text-2xl">
+        {title}
+      </h4>
+      <p className="mt-3 text-sm leading-relaxed text-[var(--muted)] transition-colors group-hover:text-[var(--paper)]/85">
+        {items}
+      </p>
+    </motion.li>
   );
 }

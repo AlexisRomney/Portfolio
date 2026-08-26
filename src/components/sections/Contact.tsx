@@ -34,8 +34,9 @@ export function Contact() {
             Construisons la prochaine solution ensemble
           </h2>
           <p className="mx-auto mt-6 max-w-2xl text-base leading-relaxed text-[var(--muted)] sm:text-lg">
-            Une mission de digitalisation, d’automatisation ou d’intégration IA ?
-            Parlons de votre besoin métier et de la solution à mettre en place.
+            Besoin d’un site vitrine ? D’automatiser un processus ? Ou d’une
+            solution plus complète ? Parlons de votre besoin — sans complexité
+            inutile.
           </p>
           <div className="mt-10 flex flex-wrap items-center justify-center gap-3">
             <Button type="button" onClick={() => setOpen(true)}>

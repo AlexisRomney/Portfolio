@@ -1,15 +1,15 @@
 "use client";
 
 import { getProject } from "@/data/projects";
-import { MockupFrame } from "@/components/ui/MockupFrame";
+import { GitHubIcon } from "@/components/icons/SocialIcons";
+import { ButtonLink } from "@/components/ui/ButtonLink";
+import { MockupCarousel } from "@/components/ui/MockupCarousel";
 import { Reveal } from "@/components/ui/Reveal";
 import { Section } from "@/components/ui/Section";
 
 export function ProjectManagement() {
   const project = getProject("gestion-projet");
   if (!project) return null;
-
-  const visuals = project.visuals;
 
   return (
     <Section
@@ -35,31 +35,27 @@ export function ProjectManagement() {
                 </li>
               ))}
             </ul>
-            <div className="inline-flex items-center gap-2 rounded-full border border-white/12 bg-white/[0.03] px-4 py-2 text-sm text-[var(--steel)]">
-              Démonstration publique
-              <span className="font-mono text-[0.6rem] uppercase tracking-[0.16em] text-[var(--accent)]">
-                Bientôt
-              </span>
-            </div>
+            {project.repoUrl ? (
+              <ButtonLink
+                href={project.repoUrl}
+                variant="outline"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <GitHubIcon className="h-4 w-4" />
+                Voir le projet sur GitHub
+              </ButtonLink>
+            ) : null}
           </div>
         </Reveal>
 
         <Reveal delay={0.1}>
-          {visuals[0] ? (
-            <MockupFrame visual={visuals[0]} priority={false} />
-          ) : null}
+          <MockupCarousel
+            visuals={project.visuals}
+            label="Galerie outil de gestion de projet"
+          />
         </Reveal>
       </div>
-
-      {visuals.length > 1 ? (
-        <div className="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-          {visuals.slice(1).map((visual, i) => (
-            <Reveal key={visual.src} delay={0.06 + i * 0.05}>
-              <MockupFrame visual={visual} />
-            </Reveal>
-          ))}
-        </div>
-      ) : null}
     </Section>
   );
 }

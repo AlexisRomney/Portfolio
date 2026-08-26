@@ -1,15 +1,14 @@
 /**
- * Parcours professionnel — uniquement des éléments publics vérifiables.
- * Ne pas inventer d’expérience, diplôme ou responsabilité.
+ * Parcours — source : CV (ne pas inventer dates, entreprises, missions).
  */
 
 export const profile = {
   name: "Alexis Romney",
-  role: "Chef de Projet IT / Business Analyst · Digitalisation · Automatisation · IA",
+  role: "Création Web · Automatisation · IA",
   tagline:
-    "Je transforme les besoins métier en solutions numériques automatisées, intelligentes et déployables.",
+    "Je construis la solution adaptée à votre besoin — d’un site web simple à une solution numérique plus avancée.",
   shortBio:
-    "Consultant et développeur orienté impact : comprendre le processus, concevoir l’outil, automatiser les flux, intégrer l’IA, puis livrer.",
+    "Site vitrine, e-commerce, application, automatisation ou IA : chaque projet part du besoin réel, avec uniquement ce qui apporte de la valeur.",
   location: "La Réunion · France",
   availability: "Ouvert aux missions",
   /**
@@ -23,50 +22,146 @@ export const profile = {
   linkedin: "https://www.linkedin.com/in/alexis-romney/",
 } as const;
 
-export type JourneyItem = {
-  kind: "formation" | "experience" | "evolution" | "projects";
+export type JourneyEmphasis = "featured" | "compact";
+
+export type JourneyExperience = {
+  id: string;
   title: string;
+  org: string;
+  place: string;
   period: string;
-  org?: string;
-  description: string;
+  emphasis: JourneyEmphasis;
+  /** Accroche courte fidèle au CV */
+  summary: string;
+  /** Points clés issus du CV */
+  highlights: string[];
 };
 
-export const journey: JourneyItem[] = [
+export type JourneyEducation = {
+  id: string;
+  title: string;
+  org: string;
+  period: string;
+};
+
+/** Expériences — ordre du plus récent au plus ancien */
+export const journeyExperiences: JourneyExperience[] = [
   {
-    kind: "formation",
-    title: "Master — Computer Engineering",
-    period: "2015 — 2020",
-    org: "SUPINFO International University",
-    description:
-      "Formation d’ingénierie informatique : bases solides pour concevoir, développer et faire évoluer des systèmes d’information.",
+    id: "auto-entrepreneur",
+    title: "Création Web & Solutions numériques sur mesure",
+    org: "Auto-entrepreneur",
+    place: "Saint-Joseph, Réunion",
+    period: "Depuis mars 2026",
+    emphasis: "featured",
+    summary:
+      "Du site vitrine à la solution métier sur mesure, je conçois des outils adaptés à vos besoins — avec la possibilité d’aller plus loin via l’automatisation et l’IA lorsque cela apporte une réelle valeur.",
+    highlights: [
+      "Recueil des besoins, analyse fonctionnelle et spécifications",
+      "Sites vitrines, applications métier et solutions web sur mesure",
+      "Automatisation et IA lorsque le besoin le justifie",
+      "Déploiement cloud, formation utilisateurs et suivi jusqu’à la mise en production",
+    ],
   },
   {
-    kind: "experience",
-    title: "Développement & systèmes d’information",
-    period: "2020 — 2023",
-    description:
-      "Parcours en développement d’applications et environnements SI (notamment Alteca, Air France Fast Track, Omnisoft) — du code aux usages métier.",
+    id: "ghanty",
+    title: "Coordinateur Applicatif et Processus Métiers",
+    org: "Ghanty",
+    place: "Saint-Louis, Réunion",
+    period: "Août 2021 → octobre 2024",
+    emphasis: "featured",
+    summary:
+      "Interface entre métiers et prestataires : recettes UAT, support applicatif, e-commerce / ERP, formation au changement et optimisation des processus.",
+    highlights: [
+      "Pilotage des recettes fonctionnelles (UAT) et mises en production",
+      "Gestion des incidents, support utilisateurs et tickets applicatifs",
+      "Référent IT E-commerce — intégration articles et commandes via ERP",
+      "Analyse fonctionnelle, cahiers des charges et cartographie des processus",
+    ],
   },
   {
-    kind: "experience",
-    title: "Processus, formation & coordination IT",
-    period: "2023 — aujourd’hui",
-    org: "Groupe GHANTY · Saint-Louis, La Réunion",
-    description:
-      "Coordination de projets IT et formation sur les process : Chargé de processus et de formation, puis Assistant de projet Méthodes et Process.",
+    id: "alteca",
+    title: "Développeur Web et d’applications",
+    org: "ALTECA",
+    place: "Toulouse, France",
+    period: "Juin 2020 → octobre 2020",
+    emphasis: "compact",
+    summary:
+      "Conception et développement d’une application de gestion de projet interne, environnement DevOps et méthodes Agile / Scrum.",
+    highlights: [
+      "Conception et développement d’une application de gestion de projet interne",
+      "Mise en place d’un environnement DevOps",
+      "Participation aux méthodes Agile / Scrum",
+    ],
   },
   {
-    kind: "evolution",
-    title: "Digitalisation · Automatisation · IA appliquée",
-    period: "Aujourd’hui",
-    description:
-      "Évolution naturelle vers des solutions qui digitalisent les processus métiers : analyse des demandes, orchestration, automatisation et IA utile au quotidien.",
+    id: "air-france",
+    title: "Développeur d’applications",
+    org: "Air France",
+    place: "Toulouse, France",
+    period: "Juillet 2019 → octobre 2019",
+    emphasis: "compact",
+    summary:
+      "Migration d’un projet Web App d’Ionic vers Angular et pratiques Agile / Scrum.",
+    highlights: [
+      "Migration d’un projet Web App d’Ionic vers Angular",
+      "Participation aux pratiques Agile / Scrum",
+    ],
   },
   {
-    kind: "projects",
-    title: "Projets personnels & livrables",
-    period: "Continu",
-    description:
-      "Applications web, outils métier, optimisation système et expérimentations IA — du besoin métier à la mise en production.",
+    id: "summer-school",
+    title: "Gestionnaire IT",
+    org: "Summer School Beijing",
+    place: "Beijing, Chine",
+    period: "Juillet 2018 → septembre 2018",
+    emphasis: "compact",
+    summary: "Gestion des ressources IT et réalisation de contenus audiovisuels.",
+    highlights: [
+      "Gestion des ressources IT",
+      "Réalisation de contenus audiovisuels",
+    ],
+  },
+  {
+    id: "run-affutage",
+    title: "Développeur Web",
+    org: "Run Affutage",
+    place: "Saint-Denis, Réunion",
+    period: "Août 2017 → octobre 2017",
+    emphasis: "compact",
+    summary:
+      "Création d’un site web e-commerce et contribution à la stratégie de visibilité en ligne.",
+    highlights: [
+      "Création d’un site web e-commerce",
+      "Contribution à la stratégie de visibilité en ligne",
+    ],
+  },
+  {
+    id: "omnisoft",
+    title: "Développeur Web PHP",
+    org: "Omnisoft",
+    place: "Saint-Louis, Réunion",
+    period: "Août 2016 → octobre 2016",
+    emphasis: "compact",
+    summary:
+      "Interface Intranet pour l’enregistrement des appels clients, bases de données et approche des ERP médicaux AxiSanté.",
+    highlights: [
+      "Création d’une interface Intranet pour l’enregistrement des appels clients",
+      "Mise en ordre des bases de données",
+      "Approche des ERP médicaux AxiSanté 4 et 5",
+    ],
+  },
+];
+
+export const journeyEducation: JourneyEducation[] = [
+  {
+    id: "ifr",
+    title: "Master Manager de la Communication & Stratégie digitale",
+    org: "IFR",
+    period: "Septembre 2021 → août 2022",
+  },
+  {
+    id: "supinfo",
+    title: "Master of Science 2 — Expert en Informatique",
+    org: "Supinfo",
+    period: "Novembre 2015 → novembre 2020",
   },
 ];

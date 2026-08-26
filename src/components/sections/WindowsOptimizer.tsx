@@ -1,7 +1,7 @@
 "use client";
 
 import { getProject } from "@/data/projects";
-import { MockupFrame } from "@/components/ui/MockupFrame";
+import { MockupCarousel } from "@/components/ui/MockupCarousel";
 import { Reveal } from "@/components/ui/Reveal";
 import { Section } from "@/components/ui/Section";
 
@@ -18,8 +18,6 @@ export function WindowsOptimizer() {
   const project = getProject("optimiseur-windows");
   if (!project) return null;
 
-  const [primary, ...rest] = project.visuals;
-
   return (
     <Section
       id="optimiseur"
@@ -29,11 +27,11 @@ export function WindowsOptimizer() {
     >
       <div className="grid items-start gap-12 lg:grid-cols-[1.05fr_0.95fr]">
         <Reveal>
-          {primary ? (
-            <MockupFrame visual={primary} priority />
-          ) : (
-            <div className="aspect-[16/10] rounded-2xl border border-white/10 bg-[var(--surface)]" />
-          )}
+          <MockupCarousel
+            visuals={project.visuals}
+            priority
+            label="Galerie Optimiseur Windows"
+          />
         </Reveal>
 
         <Reveal delay={0.12}>
@@ -82,16 +80,6 @@ export function WindowsOptimizer() {
           </div>
         </Reveal>
       </div>
-
-      {rest.length > 0 ? (
-        <div className="mt-12 grid gap-5 sm:grid-cols-2">
-          {rest.map((visual, i) => (
-            <Reveal key={visual.src} delay={0.08 + i * 0.06}>
-              <MockupFrame visual={visual} />
-            </Reveal>
-          ))}
-        </div>
-      ) : null}
     </Section>
   );
 }

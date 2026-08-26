@@ -1,57 +1,73 @@
-export const expertise = [
+/**
+ * Positionnement dual — Création Web OU Automatisation & IA (indépendants, combinables si besoin).
+ */
+
+export const creationWebOffers = [
   {
-    id: "digitalisation",
-    title: "Digitalisation",
+    id: "vitrine",
+    title: "Sites vitrines",
     description:
-      "Transformer des processus manuels en parcours numériques clairs, mesurables et adoptables par les équipes.",
+      "Présenter une activité, une entreprise ou un service avec clarté et impact.",
   },
+  {
+    id: "institutionnel",
+    title: "Sites institutionnels",
+    description:
+      "Une présence web professionnelle pour associations, entreprises et organisations.",
+  },
+  {
+    id: "ecommerce",
+    title: "E-commerce",
+    description: "Vendre des produits ou services en ligne avec un parcours fluide.",
+  },
+  {
+    id: "apps",
+    title: "Applications web / métier",
+    description:
+      "Répondre à des besoins spécifiques avec des outils numériques sur mesure.",
+  },
+] as const;
+
+export const automationAiOffers = [
   {
     id: "automation",
     title: "Automatisation",
-    description:
-      "Orchestrer workflows, intégrations et traitements pour éliminer les tâches répétitives sans perdre le contrôle métier.",
+    description: "Automatiser les tâches et processus répétitifs.",
   },
   {
     id: "ai",
     title: "Intelligence artificielle",
-    description:
-      "Intégrer l’IA là où elle crée de la valeur : analyse, catégorisation, priorisation, synthèse et aide à la décision.",
+    description: "Intégrer l’IA dans des usages professionnels concrets.",
   },
   {
-    id: "business-tools",
-    title: "Outils métier",
+    id: "digitalisation",
+    title: "Digitalisation",
     description:
-      "Concevoir et développer des applications adaptées aux opérations réelles — pas des démos décoratives.",
+      "Remplacer ou améliorer des processus manuels grâce aux outils numériques.",
   },
   {
-    id: "project",
-    title: "Gestion de projet IT",
-    description:
-      "Structurer le besoin, prioriser, livrer par itérations et aligner technique et enjeux business.",
+    id: "metier",
+    title: "Solutions métier",
+    description: "Créer des outils adaptés aux besoins spécifiques d’une entreprise.",
   },
   {
-    id: "process",
-    title: "Analyse & optimisation",
+    id: "workflows",
+    title: "Workflows",
     description:
-      "Cartographier les flux, identifier les frictions et proposer des leviers concrets de performance.",
+      "Connecter les outils et automatiser les étapes d’un processus.",
   },
 ] as const;
 
-export const techStack = [
-  {
-    group: "Frontend",
-    items: ["Next.js", "React", "TypeScript", "Tailwind CSS"],
-  },
-  {
-    group: "Backend & data",
-    items: ["Node.js", "PostgreSQL / Neon", "API REST"],
-  },
-  {
-    group: "IA & automation",
-    items: ["Gemini", "OpenRouter", "Trigger.dev", "Workflows"],
-  },
-  {
-    group: "Plateforme & desktop",
-    items: [".NET / WinForms", "PowerShell", "Vercel"],
-  },
-] as const;
+/** Ancienne grille d’expertise — conservée pour compatibilité si besoin */
+export const expertise = [
+  ...creationWebOffers.map((o) => ({
+    id: o.id,
+    title: o.title,
+    description: o.description,
+  })),
+  ...automationAiOffers.map((o) => ({
+    id: o.id,
+    title: o.title,
+    description: o.description,
+  })),
+];

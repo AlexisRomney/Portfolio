@@ -31,7 +31,7 @@ const siteUrl = getSiteUrl();
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
   title: {
-    default: `${profile.name} — Digitalisation, Automatisation & IA`,
+    default: `${profile.name} — Création Web & Solutions numériques`,
     template: `%s · ${profile.name}`,
   },
   description: profile.tagline,
@@ -41,23 +41,26 @@ export const metadata: Metadata = {
   keywords: [
     "Alexis Romney",
     "portfolio",
+    "création web",
+    "sites vitrines",
+    "e-commerce",
+    "applications web",
     "digitalisation",
     "automatisation",
     "intelligence artificielle",
     "outils métier",
-    "gestion de projet IT",
   ],
   openGraph: {
     type: "website",
     locale: "fr_FR",
     url: siteUrl,
     siteName: `${profile.name} Portfolio`,
-    title: `${profile.name} — Digitalisation, Automatisation & IA`,
+    title: `${profile.name} — Création Web & Solutions numériques`,
     description: profile.tagline,
   },
   twitter: {
     card: "summary_large_image",
-    title: `${profile.name} — Digitalisation, Automatisation & IA`,
+    title: `${profile.name} — Création Web & Solutions numériques`,
     description: profile.tagline,
   },
   robots: {
