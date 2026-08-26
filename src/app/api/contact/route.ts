@@ -4,6 +4,13 @@ import { validateContactPayload } from "@/lib/contact/validation";
 
 export const runtime = "nodejs";
 
+/**
+ * Destinataire unique des messages du formulaire.
+ * Toujours cette adresse — jamais l’e-mail saisi par le visiteur.
+ * (serveur uniquement ; ne pas exposer côté client)
+ */
+const CONTACT_INBOX = "Alexis.romney@hotmail.fr";
+
 const GENERIC_ERROR =
   "Impossible d’envoyer le message pour le moment. Réessayez plus tard.";
 
@@ -99,14 +106,12 @@ export async function POST(request: Request) {
   }
 
   const apiKey = process.env.RESEND_API_KEY?.trim();
-  const toEmail = process.env.CONTACT_TO_EMAIL?.trim();
   const fromEmail = process.env.CONTACT_FROM_EMAIL?.trim();
   const fromName =
     process.env.CONTACT_FROM_NAME?.trim() || "Portfolio Alexis Romney";
 
   const missing: string[] = [];
   if (!apiKey) missing.push("RESEND_API_KEY");
-  if (!toEmail) missing.push("CONTACT_TO_EMAIL");
   if (!fromEmail) missing.push("CONTACT_FROM_EMAIL");
 
   if (missing.length > 0) {
@@ -127,18 +132,31 @@ export async function POST(request: Request) {
     );
   }
 
-  // Narrowed after missing-env guard
   const resolvedApiKey = apiKey as string;
-  const resolvedToEmail = toEmail as string;
   const resolvedFromEmail = fromEmail as string;
+  const { name, email: visitorEmail, subject, message } = parsed.data;
 
-  const { name, email, subject, message } = parsed.data;
+  // Garde-fou explicite : le visiteur n’est jamais le destinataire.
+  const to = CONTACT_INBOX;
+  const replyTo = visitorEmail;
+
   const safeSubject = subject.slice(0, 120);
+  const text = [
+    "Nouveau message depuis le portfolio",
+    "",
+    `Nom du contact : ${name}`,
+    `Adresse e-mail : ${visitorEmail}`,
+    `Sujet : ${safeSubject}`,
+    "",
+    "Message :",
+    message,
+  ].join("\n");
+
   const html = `
     <div style="font-family:Georgia,serif;line-height:1.5;color:#111">
       <p><strong>Nouveau message depuis le portfolio</strong></p>
-      <p><strong>Nom :</strong> ${escapeHtml(name)}</p>
-      <p><strong>Email :</strong> ${escapeHtml(email)}</p>
+      <p><strong>Nom du contact :</strong> ${escapeHtml(name)}</p>
+      <p><strong>Adresse e-mail :</strong> ${escapeHtml(visitorEmail)}</p>
       <p><strong>Sujet :</strong> ${escapeHtml(safeSubject)}</p>
       <p><strong>Message :</strong></p>
       <pre style="white-space:pre-wrap;font-family:ui-monospace,monospace">${escapeHtml(message)}</pre>
@@ -149,11 +167,11 @@ export async function POST(request: Request) {
     const resend = new Resend(resolvedApiKey);
     const result = await resend.emails.send({
       from: `${fromName} <${resolvedFromEmail}>`,
-      to: [resolvedToEmail],
-      replyTo: email,
+      to: [to],
+      replyTo,
       subject: `[Portfolio] ${safeSubject}`,
       html,
-      text: `Nom: ${name}\nEmail: ${email}\nSujet: ${safeSubject}\n\n${message}`,
+      text,
     });
 
     if (result.error) {
@@ -172,11 +190,9 @@ export async function POST(request: Request) {
                 fromDomain: resolvedFromEmail.includes("@")
                   ? resolvedFromEmail.split("@")[1]
                   : null,
-                toDomain: resolvedToEmail.includes("@")
-                  ? resolvedToEmail.split("@")[1]
-                  : null,
+                toDomain: to.includes("@") ? to.split("@")[1] : null,
                 hint:
-                  "Si le domaine d’envoi n’est pas vérifié dans Resend, utilisez CONTACT_FROM_EMAIL=onboarding@resend.dev en local. Le destinataire (to) doit être l’email du compte Resend tant qu’aucun domaine n’est vérifié.",
+                  "Si le domaine d’envoi n’est pas vérifié dans Resend, utilisez CONTACT_FROM_EMAIL=onboarding@resend.dev en local. Avec onboarding@resend.dev, le destinataire doit souvent être l’email du compte Resend.",
               }
             : {}),
         },
@@ -202,7 +218,11 @@ export async function POST(request: Request) {
       );
     }
 
-    console.info("[contact] Resend accepted email id:", id);
+    console.info("[contact] Resend accepted email id:", id, {
+      to,
+      replyTo,
+      from: resolvedFromEmail,
+    });
     return json(
       {
         ok: true,
@@ -213,9 +233,7 @@ export async function POST(request: Request) {
               fromDomain: resolvedFromEmail.includes("@")
                 ? resolvedFromEmail.split("@")[1]
                 : null,
-              toDomain: resolvedToEmail.includes("@")
-                ? resolvedToEmail.split("@")[1]
-                : null,
+              toDomain: to.includes("@") ? to.split("@")[1] : null,
               note: "Accepté par Resend (id reçu). Vérifiez le dashboard Resend puis boîte + spam — ce n’est pas une preuve de livraison.",
             }
           : {}),

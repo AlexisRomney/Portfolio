@@ -27,12 +27,14 @@ npm run dev
 
 ## Formulaire de contact (Resend)
 
+Le destinataire des messages est fixé côté serveur à `Alexis.romney@hotmail.fr`.
+L’e-mail du visiteur est utilisé uniquement en `Reply-To` et dans le corps du message.
+
 Variables **serveur uniquement** (jamais `NEXT_PUBLIC_`) — voir `.env.example` :
 
 | Variable | Rôle |
 |----------|------|
 | `RESEND_API_KEY` | Clé API Resend |
-| `CONTACT_TO_EMAIL` | Destinataire |
 | `CONTACT_FROM_EMAIL` | Expéditeur (domaine vérifié Resend, ou `onboarding@resend.dev` en test) |
 | `CONTACT_FROM_NAME` | Nom d’affichage de l’expéditeur |
 

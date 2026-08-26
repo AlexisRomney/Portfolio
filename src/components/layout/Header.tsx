@@ -11,7 +11,6 @@ const links = [
   { href: "#projet-phare", label: "Projet phare" },
   { href: "#projets", label: "Réalisations" },
   { href: "#parcours", label: "Parcours" },
-  { href: "#contact", label: "Contact" },
 ];
 
 export function Header() {
@@ -67,7 +66,7 @@ export function Header() {
             href="#contact"
             className="rounded-full border border-white/15 px-4 py-2 text-sm text-[var(--paper)] transition-colors hover:border-[var(--accent)] hover:text-[var(--accent)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--accent)]"
           >
-            Discutons
+            Contact
           </a>
         </nav>
 
@@ -121,6 +120,15 @@ export function Header() {
                 </a>
               </li>
             ))}
+            <li>
+              <a
+                href="#contact"
+                className="mt-2 inline-flex rounded-full border border-white/15 px-4 py-2 text-sm text-[var(--paper)] transition-colors hover:border-[var(--accent)] hover:text-[var(--accent)]"
+                onClick={() => setOpen(false)}
+              >
+                Contact
+              </a>
+            </li>
           </ul>
         </nav>
       ) : null}

@@ -4,7 +4,7 @@
 
 export const profile = {
   name: "Alexis Romney",
-  role: "Création Web · Automatisation · IA",
+  role: "Création Web · Solutions numériques · Automatisation",
   tagline:
     "Je construis la solution adaptée à votre besoin — d’un site web simple à une solution numérique plus avancée.",
   shortBio:

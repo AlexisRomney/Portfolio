@@ -237,7 +237,7 @@ export const projects: Project[] = [
   {
     id: "gestion-projet",
     name: "Outil de gestion de projet",
-    eyebrow: "Prochainement · Agile & Classique",
+    eyebrow: "Projet personnel · Agile & Classique",
     summary:
       "Espace de pilotage projets : tableaux de bord, listes, kanban, tâches et collaboration — en cours de finalisation.",
     problem:
