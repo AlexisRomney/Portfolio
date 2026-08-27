@@ -40,6 +40,9 @@ yarn-error.log*
 .vercel-sim/
 vercel-build.log
 
+# trigger.dev local worker builds
+.trigger/
+
 # typescript
 *.tsbuildinfo
 next-env.d.ts

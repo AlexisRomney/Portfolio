@@ -5,6 +5,7 @@ import { useReducedMotion } from "motion/react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { getFeaturedProject } from "@/data/projects";
+import { ButtonLink } from "@/components/ui/ButtonLink";
 import { MockupFrame } from "@/components/ui/MockupFrame";
 import { Reveal } from "@/components/ui/Reveal";
 
@@ -120,20 +121,22 @@ export function FeaturedAI() {
                 Démonstration
               </p>
               <h3 className="mt-4 font-display text-2xl text-[var(--paper)]">
-                Bientôt disponible
+                Démonstration interactive
               </h3>
               <p className="mt-3 text-sm leading-relaxed text-[var(--muted)]">
-                L’application n’est pas encore hébergée publiquement. Le bouton
-                « Voir la démonstration » sera activé dès la mise en ligne —
-                sans URL inventée.
+                Ouvrez l’application intégrée au portfolio pour manipuler le
+                produit — analyse, demandes, réponses et automatisations.
               </p>
               <div className="mt-8">
-                <span className="inline-flex cursor-default items-center gap-2 rounded-full border border-white/12 bg-white/[0.03] px-5 py-2.5 text-sm text-[var(--steel)]">
-                  {project.demoLabel ?? "Voir la démonstration"}
-                  <span className="font-mono text-[0.6rem] uppercase tracking-[0.16em] text-[var(--accent)]">
-                    Soon
+                {project.demoUrl ? (
+                  <ButtonLink href={project.demoUrl}>
+                    {project.demoLabel ?? "Voir la démonstration"}
+                  </ButtonLink>
+                ) : (
+                  <span className="inline-flex cursor-default items-center gap-2 rounded-full border border-white/12 bg-white/[0.03] px-5 py-2.5 text-sm text-[var(--steel)]">
+                    {project.demoLabel ?? "Voir la démonstration"}
                   </span>
-                </span>
+                )}
               </div>
               <p className="mt-8 text-sm text-[var(--muted)]">
                 <span className="text-[var(--paper)]">Rôle — </span>

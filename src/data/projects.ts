@@ -69,9 +69,9 @@ export const projects: Project[] = [
       "Trigger.dev",
       "Resend",
     ],
-    demoUrl: null,
+    demoUrl: "/gestion-demandes",
     demoLabel: "Voir la démonstration",
-    status: "coming-soon",
+    status: "private-demo",
     published: true,
     featured: true,
     highlight: true,
@@ -159,7 +159,7 @@ export const projects: Project[] = [
   },
   {
     id: "mailvault",
-    name: "MailVault",
+    name: "Mail2Mine",
     eyebrow: "Produit · cloud personnel",
     summary:
       "Envoyer des fichiers à soi-même par e-mail et y accéder partout — boîte mail comme stockage privé.",
@@ -171,14 +171,15 @@ export const projects: Project[] = [
       "Un produit simple à comprendre : inbox = stockage, accessible depuis n’importe quel appareil.",
     role: "Produit & développement full-stack",
     technologies: ["React", "Vite", "Neon", "OAuth", "Gmail API"],
-    demoUrl: "https://mailvault-your-personal-cloud.vercel.app/",
+    demoUrl: "http://mail2mine.com",
     status: "live",
-    published: true,
+    /** Masqué temporairement du portfolio public — code / assets conservés */
+    published: false,
     visualTone: "product",
     visuals: [
       {
         src: "/mockups/mailvault-bibliotheque.webp",
-        alt: "Bibliothèque MailVault — images, documents, audio et liens",
+        alt: "Bibliothèque Mail2Mine — images, documents, audio et liens",
         width: 1024,
         height: 466,
         frame: "browser",

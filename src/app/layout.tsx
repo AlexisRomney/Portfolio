@@ -1,9 +1,5 @@
 import type { Metadata, Viewport } from "next";
 import { Instrument_Sans, Syne, JetBrains_Mono } from "next/font/google";
-import { Footer } from "@/components/layout/Footer";
-import { Header } from "@/components/layout/Header";
-import { MotionProvider } from "@/components/providers/MotionProvider";
-import { SmoothScroll } from "@/components/providers/SmoothScroll";
 import { profile } from "@/data/profile";
 import { getSiteUrl } from "@/lib/site-url";
 import "./globals.css";
@@ -77,29 +73,17 @@ export const viewport: Viewport = {
   colorScheme: "dark",
 };
 
-export default function RootLayout({ children }: LayoutProps<"/">) {
+export default function RootLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   return (
     <html
       lang="fr"
       className={`${sans.variable} ${display.variable} ${mono.variable} h-full antialiased`}
     >
-      <body className="grain min-h-full flex flex-col font-sans">
-        <MotionProvider>
-          <SmoothScroll>
-            <a
-              href="#contenu"
-              className="sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[60] focus:inline-flex focus:h-auto focus:w-auto focus:overflow-visible focus:rounded-full focus:bg-[var(--accent)] focus:px-4 focus:py-2 focus:text-[var(--ink)] focus:[clip:auto]"
-            >
-              Aller au contenu
-            </a>
-            <Header />
-            <div id="contenu" className="flex flex-1 flex-col">
-              {children}
-            </div>
-            <Footer />
-          </SmoothScroll>
-        </MotionProvider>
-      </body>
+      <body className="min-h-full flex flex-col font-sans">{children}</body>
     </html>
   );
 }
