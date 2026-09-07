@@ -8,8 +8,8 @@ export default function robots(): MetadataRoute.Robots {
     rules: {
       userAgent: "*",
       allow: "/",
-      // Démo accessible aux visiteurs, non indexée par les moteurs.
-      disallow: ["/gestion-demandes", "/gestion-demandes/"],
+      // APIs techniques uniquement — la démo publique /gestion-demandes reste crawlable.
+      disallow: ["/api/", "/gestion-demandes/api/"],
     },
     sitemap: `${siteUrl}/sitemap.xml`,
   };

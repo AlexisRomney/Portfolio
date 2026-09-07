@@ -49,7 +49,7 @@ export const metadata: Metadata = {
   openGraph: {
     type: "website",
     locale: "fr_FR",
-    url: siteUrl,
+    url: `${siteUrl}/`,
     siteName: `${profile.name} Portfolio`,
     title: `${profile.name} — Création Web & Solutions numériques`,
     description: profile.tagline,
@@ -64,7 +64,7 @@ export const metadata: Metadata = {
     follow: true,
   },
   alternates: {
-    canonical: "/",
+    canonical: `${siteUrl}/`,
   },
 };
 
