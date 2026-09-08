@@ -28,7 +28,7 @@ function resolveDemoAppUrl(): string | undefined {
 
 export default defineConfig({
   project: "proj_lqrgqdceewezsizfepsw",
-  runtime: "node",
+  runtime: "node-24",
   logLevel: "info",
   maxDuration: 3600,
   retries: {
