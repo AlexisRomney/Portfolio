@@ -160,21 +160,20 @@ export const projects: Project[] = [
   {
     id: "mailvault",
     name: "Mail2Mine",
-    eyebrow: "Produit · cloud personnel",
+    eyebrow: "Produit · stockage",
     summary:
-      "Envoyer des fichiers à soi-même par e-mail et y accéder partout — boîte mail comme stockage privé.",
+      "Un espace de stockage personnel associé à une adresse e-mail dédiée, pour recevoir, conserver et retrouver facilement ses contenus au même endroit.",
     problem:
-      "Partager ou retrouver rapidement des fichiers sans multiplier les services de stockage dédiés.",
+      "Recevoir, conserver et retrouver ses contenus sans multiplier les services de stockage dédiés.",
     solution:
-      "Application web avec authentification OAuth, accès multi-appareils et architecture centrée sur la boîte mail.",
+      "Envoyez vos contenus par e-mail et centralisez toutes vos données dans un espace personnel, accessible depuis n’importe quel appareil.",
     result:
-      "Un produit simple à comprendre : inbox = stockage, accessible depuis n’importe quel appareil.",
+      "Adresse e-mail dédiée → espace de stockage unique, accessible depuis tous les appareils.",
     role: "Produit & développement full-stack",
     technologies: ["React", "Vite", "Neon", "OAuth", "Gmail API"],
     demoUrl: "http://mail2mine.com",
     status: "live",
-    /** Masqué temporairement du portfolio public — code / assets conservés */
-    published: false,
+    published: true,
     visualTone: "product",
     visuals: [
       {
