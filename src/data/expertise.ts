@@ -7,7 +7,7 @@ export const creationWebOffers = [
     id: "vitrine",
     title: "Sites vitrines",
     description:
-      "Présenter une activité, une entreprise ou un service avec clarté et impact.",
+      "Présenter une activité, une entreprise ou un service avec clarté — création ou refonte de site vitrine.",
   },
   {
     id: "institutionnel",
@@ -18,7 +18,8 @@ export const creationWebOffers = [
   {
     id: "ecommerce",
     title: "E-commerce",
-    description: "Vendre des produits ou services en ligne avec un parcours fluide.",
+    description:
+      "Boutique en ligne et parcours d’achat fluide — création de site e-commerce sur mesure.",
   },
   {
     id: "apps",

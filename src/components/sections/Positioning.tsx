@@ -6,6 +6,7 @@ import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { Section } from "@/components/ui/Section";
 import { easeOut } from "@/lib/motion";
+import { sectionLinkClass } from "@/lib/section-link";
 
 const solutionDomains = [
   {
@@ -81,8 +82,8 @@ export function Positioning() {
     <Section
       id="positionnement"
       eyebrow="Positionnement"
-      title="Le besoin d’abord. La solution ensuite."
-      description="Pas de solution préfabriquée. Chaque projet commence par un besoin et évolue selon ce qui est réellement utile."
+      title="Un site web clair, puis ce qu’il faut vraiment"
+      description="Pas de formule toute faite : chaque projet de création ou de refonte de site internet part de votre activité, de votre zone (La Réunion ou ailleurs) et de vos objectifs réels."
     >
       <div ref={stageRef} className="relative">
         <div
@@ -95,13 +96,19 @@ export function Positioning() {
             className="pointer-events-none absolute inset-x-10 top-0 h-px bg-gradient-to-r from-transparent via-[var(--accent)]/50 to-transparent"
           />
           <h3 className="font-display text-[clamp(1.6rem,3.5vw,2.4rem)] tracking-tight text-[var(--paper)]">
-            Solutions numériques sur mesure
+            Création de site internet d’abord, solutions numériques ensuite
           </h3>
           <p className="mx-auto mt-5 max-w-2xl text-sm leading-relaxed text-[var(--muted)] sm:text-base">
-            Chaque projet est différent. Je pars du besoin pour construire une
-            solution adaptée : un site web, une fonctionnalité spécifique, une
-            automatisation ou une combinaison de plusieurs éléments lorsque cela
-            apporte une réelle valeur.
+            <a href="#expertise" className={sectionLinkClass}>
+              Sites vitrines
+            </a>
+            , institutionnels et boutiques en ligne pour donner une présence
+            professionnelle crédible. Au-delà du web, j’intègre des fonctionnalités
+            sur mesure, de l’automatisation ou de l’IA uniquement quand cela
+            simplifie réellement votre quotidien.{" "}
+            <a href="#projets" className={sectionLinkClass}>
+              Voir les réalisations
+            </a>
           </p>
         </div>
 

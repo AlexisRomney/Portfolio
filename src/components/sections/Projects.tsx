@@ -7,6 +7,7 @@ import { MockupFrame } from "@/components/ui/MockupFrame";
 import { Reveal } from "@/components/ui/Reveal";
 import { Section } from "@/components/ui/Section";
 import { easeOut } from "@/lib/motion";
+import { sectionLinkClass } from "@/lib/section-link";
 
 export function Projects() {
   const items = getShowcaseProjects();
@@ -14,10 +15,18 @@ export function Projects() {
   return (
     <Section
       id="projets"
-      tone="muted"
       eyebrow="Réalisations"
       title="Produits livrés & études de cas"
-      description="Réalisations web, automatisation et IA — parfois séparées, parfois combinées — pour illustrer la diversité des solutions possibles."
+      description={
+        <>
+          Exemples concrets de sites vitrines, e-commerce et projets web livrés
+          — preuves de savoir-faire pour votre future création ou refonte de site
+          internet.{" "}
+          <a href="#contact" className={sectionLinkClass}>
+            Parlons de votre projet web
+          </a>
+        </>
+      }
     >
       <div className="flex flex-col gap-8">
         {items.map((project, i) => (
@@ -78,8 +87,9 @@ function ProjectRow({ project, index }: { project: Project; index: number }) {
             {project.demoUrl ? (
               <a
                 href={project.demoUrl}
-                target="_blank"
-                rel="noopener noreferrer"
+                {...(project.demoUrl.startsWith("http")
+                  ? { target: "_blank", rel: "noopener noreferrer" }
+                  : {})}
                 className="inline-flex items-center gap-2 text-sm text-[var(--accent)] transition-colors hover:text-[var(--accent-soft)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--accent)]"
               >
                 Voir le projet

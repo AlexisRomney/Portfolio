@@ -3,8 +3,10 @@
 import { useEffect, useRef } from "react";
 import { motion, useMotionTemplate, useMotionValue, useReducedMotion } from "motion/react";
 import { profile } from "@/data/profile";
+import { homeSeo } from "@/data/site-seo";
 import { ButtonLink } from "@/components/ui/ButtonLink";
 import { easeOut } from "@/lib/motion";
+import { usePrefersReducedMotion } from "@/lib/use-prefers-reduced-motion";
 
 export function Hero() {
   const reduce = useReducedMotion();
@@ -60,9 +62,13 @@ export function Hero() {
             {profile.role}
           </motion.p>
 
-          <h1 className="font-display text-[clamp(3rem,9vw,6.4rem)] font-medium leading-[0.92] tracking-[-0.045em] text-[var(--paper)]">
-            <AnimatedLine text={profile.name} delay={0.15} />
+          <h1 className="font-display text-[clamp(2rem,5.5vw,3.75rem)] font-medium leading-[1.02] tracking-[-0.035em] text-[var(--paper)]">
+            {homeSeo.h1}
           </h1>
+
+          <p className="mt-5 font-display text-[clamp(2.2rem,7vw,4.5rem)] font-medium leading-[0.95] tracking-[-0.04em] text-[var(--paper)]">
+            <AnimatedLine text={profile.name} delay={0.15} />
+          </p>
 
           <motion.p
             initial={reduce ? false : { opacity: 0, y: 20 }}
@@ -79,9 +85,9 @@ export function Hero() {
             transition={{ duration: 0.7, delay: 0.75, ease: easeOut }}
             className="mt-10 flex flex-wrap gap-3"
           >
-            <ButtonLink href="#projets">Voir mes projets</ButtonLink>
-            <ButtonLink href="#contact" variant="outline">
-              Me contacter
+            <ButtonLink href="#contact">Parlons de votre projet web</ButtonLink>
+            <ButtonLink href="#projets" variant="outline">
+              Voir mes réalisations
             </ButtonLink>
           </motion.div>
         </div>
@@ -95,10 +101,10 @@ export function Hero() {
           <p className="text-sm leading-relaxed text-[var(--muted)]">{profile.shortBio}</p>
           <ul className="mt-8 space-y-3">
             {[
-              "Un site vitrine, simplement",
-              "Une automatisation adaptée au besoin",
-              "Ou une solution plus complète si utile",
-              "Toujours partir du besoin, pas de la techno",
+              "Site vitrine, institutionnel ou e-commerce",
+              "Refonte de site internet existant",
+              "Solutions numériques sur mesure si besoin",
+              "Automatisation et IA lorsque c’est pertinent",
             ].map((item, i) => (
               <motion.li
                 key={item}
@@ -122,7 +128,7 @@ export function Hero() {
 }
 
 function AnimatedLine({ text, delay }: { text: string; delay: number }) {
-  const reduce = useReducedMotion();
+  const reduce = usePrefersReducedMotion();
   const words = text.split(" ");
 
   if (reduce) return <>{text}</>;

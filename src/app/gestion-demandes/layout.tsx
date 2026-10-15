@@ -19,7 +19,7 @@ export const metadata: Metadata = {
   title: "Assistant IA — Gestion des demandes",
   description:
     "Démonstration interactive : transformez automatiquement les demandes clients en décisions métier exploitables grâce à l’analyse IA, au routage et à l’automatisation.",
-  robots: { index: false, follow: false },
+  robots: { index: true, follow: true },
   alternates: {
     canonical: demoUrl,
   },

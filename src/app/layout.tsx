@@ -1,6 +1,8 @@
 import type { Metadata, Viewport } from "next";
 import { Instrument_Sans, Syne, JetBrains_Mono } from "next/font/google";
 import { profile } from "@/data/profile";
+import { homeSeo } from "@/data/site-seo";
+import { StructuredData } from "@/components/seo/StructuredData";
 import { getSiteUrl } from "@/lib/site-url";
 import "./globals.css";
 
@@ -27,37 +29,38 @@ const siteUrl = getSiteUrl();
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
   title: {
-    default: `${profile.name} — Création Web & Solutions numériques`,
+    default: homeSeo.title,
     template: `%s · ${profile.name}`,
   },
-  description: profile.tagline,
+  description: homeSeo.description,
   applicationName: `${profile.name} Portfolio`,
   authors: [{ name: profile.name, url: profile.github }],
   creator: profile.name,
   keywords: [
+    "création de site internet La Réunion",
+    "création de site web La Réunion",
+    "création de site vitrine",
+    "développeur web freelance La Réunion",
+    "création de site e-commerce La Réunion",
+    "refonte de site internet",
+    "Saint-Joseph La Réunion",
     "Alexis Romney",
-    "portfolio",
-    "création web",
-    "sites vitrines",
-    "e-commerce",
-    "applications web",
-    "digitalisation",
+    "sites institutionnels",
+    "solutions numériques",
     "automatisation",
-    "intelligence artificielle",
-    "outils métier",
   ],
   openGraph: {
     type: "website",
     locale: "fr_FR",
     url: `${siteUrl}/`,
     siteName: `${profile.name} Portfolio`,
-    title: `${profile.name} — Création Web & Solutions numériques`,
-    description: profile.tagline,
+    title: homeSeo.title,
+    description: homeSeo.description,
   },
   twitter: {
     card: "summary_large_image",
-    title: `${profile.name} — Création Web & Solutions numériques`,
-    description: profile.tagline,
+    title: homeSeo.title,
+    description: homeSeo.description,
   },
   robots: {
     index: true,
@@ -81,9 +84,13 @@ export default function RootLayout({
   return (
     <html
       lang="fr"
+      suppressHydrationWarning
       className={`${sans.variable} ${display.variable} ${mono.variable} h-full antialiased`}
     >
-      <body className="min-h-full flex flex-col font-sans">{children}</body>
+      <body className="min-h-full flex flex-col font-sans">
+        <StructuredData />
+        {children}
+      </body>
     </html>
   );
 }

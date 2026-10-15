@@ -57,7 +57,7 @@ export function FeaturedAI() {
   return (
     <section
       id="projet-phare"
-      className="relative overflow-hidden px-5 py-24 sm:px-8 sm:py-32 lg:px-16"
+      className="relative overflow-hidden bg-[var(--surface)] px-5 py-24 sm:px-8 sm:py-32 lg:px-16"
     >
       <div
         aria-hidden
@@ -97,7 +97,7 @@ export function FeaturedAI() {
         {visual ? (
           <Reveal delay={0.08}>
             <div className="mt-14">
-              <MockupFrame visual={visual} priority className="mx-auto max-w-5xl" />
+              <MockupFrame visual={visual} className="mx-auto max-w-5xl" />
             </div>
           </Reveal>
         ) : null}

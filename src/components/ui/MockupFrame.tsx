@@ -70,7 +70,7 @@ export function MockupFrame({
           height={height}
           priority={priority}
           className="h-auto w-full object-contain"
-          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 90vw, 720px"
+          sizes="(max-width: 640px) 100vw, (max-width: 1024px) min(90vw, 896px), min(50vw, 720px)"
         />
       </div>
     </motion.div>

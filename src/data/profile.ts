@@ -4,12 +4,12 @@
 
 export const profile = {
   name: "Alexis Romney",
-  role: "Création Web · Solutions numériques · Automatisation",
+  role: "Développeur web freelance · La Réunion",
   tagline:
-    "Je construis la solution adaptée à votre besoin — d’un site web simple à une solution numérique plus avancée.",
+    "Sites vitrines, institutionnels et e-commerce sur mesure pour les entreprises et indépendants — avec solutions numériques et automatisation lorsque cela apporte une réelle valeur.",
   shortBio:
-    "Site vitrine, e-commerce, application, automatisation ou IA : chaque projet part du besoin réel, avec uniquement ce qui apporte de la valeur.",
-  location: "La Réunion · France",
+    "Basé à Saint-Joseph (La Réunion), j’accompagne les professionnels de la création de site internet à la refonte, en passant par le e-commerce et les outils métier adaptés au besoin.",
+  location: "Saint-Joseph, La Réunion · France",
   availability: "Ouvert aux missions",
   /**
    * Photo de profil (optionnelle).

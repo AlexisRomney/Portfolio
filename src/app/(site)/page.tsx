@@ -14,8 +14,8 @@ export default function Home() {
       <Hero />
       <Positioning />
       <Expertise />
-      <FeaturedAI />
       <Projects />
+      <FeaturedAI />
       <WindowsOptimizer />
       <ProjectManagement />
       <Journey />

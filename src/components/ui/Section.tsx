@@ -5,7 +5,7 @@ type SectionProps = {
   id?: string;
   eyebrow?: string;
   title: string;
-  description?: string;
+  description?: ReactNode;
   children: ReactNode;
   className?: string;
   tone?: "default" | "muted" | "contrast";

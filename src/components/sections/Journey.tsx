@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useId, useRef, useState } from "react";
-import { AnimatePresence, motion, useReducedMotion } from "motion/react";
+import { AnimatePresence, motion } from "motion/react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import {
@@ -12,9 +12,10 @@ import {
 import { Reveal } from "@/components/ui/Reveal";
 import { Section } from "@/components/ui/Section";
 import { easeOut } from "@/lib/motion";
+import { usePrefersReducedMotion } from "@/lib/use-prefers-reduced-motion";
 
 export function Journey() {
-  const reduce = useReducedMotion();
+  const reduce = usePrefersReducedMotion();
   const trackRef = useRef<HTMLDivElement>(null);
   const lineRef = useRef<HTMLDivElement>(null);
 

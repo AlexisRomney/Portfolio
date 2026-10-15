@@ -6,6 +6,7 @@ import {
 } from "@/data/expertise";
 import { Reveal } from "@/components/ui/Reveal";
 import { Section } from "@/components/ui/Section";
+import { sectionLinkClass } from "@/lib/section-link";
 
 export function Expertise() {
   return (
@@ -13,8 +14,17 @@ export function Expertise() {
       id="expertise"
       tone="muted"
       eyebrow="Expertise"
-      title="Ce que je mets en œuvre"
-      description="Deux domaines indépendants, au même niveau. Un projet peut n’en mobiliser qu’un — ou les deux, uniquement si le besoin le justifie."
+      title="Création de sites web et solutions numériques"
+      description={
+        <>
+          En priorité : sites vitrines, institutionnels et e-commerce pour les
+          professionnels à La Réunion. Automatisation, digitalisation et IA en
+          complément lorsque le besoin le justifie.{" "}
+          <a href="#projets" className={sectionLinkClass}>
+            Voir les réalisations
+          </a>
+        </>
+      }
     >
       <div className="grid gap-12 lg:grid-cols-2 lg:gap-16">
         <OfferColumn

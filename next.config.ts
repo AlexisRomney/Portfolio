@@ -20,8 +20,15 @@ const nextConfig: NextConfig = {
     root: projectRoot,
   },
   /**
-   * Serve images as-is — do not consume Vercel Image Optimization
-   * Transformations. Files under /public are already sized for the site.
+   * Images are served from /public without the Next.js optimizer.
+   *
+   * Kept after visual QA: Vercel/Next image optimization previously softened
+   * mockup captures. Sources are pre-exported WebP (see public/mockups) with
+   * explicit width/height in project data.
+   *
+   * To re-enable later: set unoptimized to false and validate mockups on a Vercel
+   * preview (Image Optimization quota + sharpness). No code change required in
+   * MockupFrame beyond optional `quality` if needed.
    */
   images: {
     unoptimized: true,

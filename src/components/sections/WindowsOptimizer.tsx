@@ -29,7 +29,6 @@ export function WindowsOptimizer() {
         <Reveal>
           <MockupCarousel
             visuals={project.visuals}
-            priority
             label="Galerie Optimiseur Windows"
           />
         </Reveal>

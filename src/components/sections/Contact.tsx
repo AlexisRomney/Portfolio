@@ -31,16 +31,16 @@ export function Contact() {
             Contact
           </p>
           <h2 className="font-display text-[clamp(2.4rem,6vw,4.5rem)] font-medium leading-[1.02] tracking-[-0.04em] text-[var(--paper)]">
-            Construisons la prochaine solution ensemble
+            Parlons de votre projet web
           </h2>
           <p className="mx-auto mt-6 max-w-2xl text-base leading-relaxed text-[var(--muted)] sm:text-lg">
-            Besoin d’un site vitrine ? D’automatiser un processus ? Ou d’une
-            solution plus complète ? Parlons de votre besoin — sans complexité
-            inutile.
+            Création de site vitrine, e-commerce ou refonte à La Réunion : décrivez
+            votre besoin et je vous réponds avec une approche claire, adaptée à
+            votre activité — sans jargon inutile.
           </p>
           <div className="mt-10 flex flex-wrap items-center justify-center gap-3">
             <Button type="button" onClick={() => setOpen(true)}>
-              Me contacter
+              Demander un devis
             </Button>
             {hasOrigin ? (
               <ButtonLink
