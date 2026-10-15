@@ -8,6 +8,7 @@ export type PortfolioDictionary = {
     h1: string;
     keywords: string[];
     websiteName: string;
+    ogImageAlt: string;
   };
   a11y: {
     skipToContent: string;
@@ -170,6 +171,8 @@ const fr: PortfolioDictionary = {
       "Alexis Romney",
     ],
     websiteName: "Alexis Romney · Portfolio",
+    ogImageAlt:
+      "Alexis Romney — développement de solutions sur mesure, digitalisation et automatisation",
   },
   a11y: {
     skipToContent: "Aller au contenu",
@@ -364,6 +367,8 @@ const en: PortfolioDictionary = {
       "Alexis Romney",
     ],
     websiteName: "Alexis Romney · Portfolio",
+    ogImageAlt:
+      "Alexis Romney — custom solution development, digitalization, and automation",
   },
   a11y: {
     skipToContent: "Skip to content",

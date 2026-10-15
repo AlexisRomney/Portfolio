@@ -11,6 +11,7 @@ import { profile } from "@/data/profile";
 import { defaultLocale, isLocale, type Locale } from "@/i18n/config";
 import { localePath } from "@/i18n/navigation";
 import { getPortfolioDictionary } from "@/i18n/portfolio-dictionary";
+import { getPortfolioOpenGraphImages } from "@/lib/portfolio-social";
 import { getSiteUrl } from "@/lib/site-url";
 
 type LayoutProps = {
@@ -34,6 +35,7 @@ export async function generateMetadata({
   const canonical = `${siteUrl}${localePath(locale)}`;
   const alternateFr = `${siteUrl}${localePath("fr")}`;
   const alternateEn = `${siteUrl}${localePath("en")}`;
+  const openGraphImages = getPortfolioOpenGraphImages(siteUrl, locale);
 
   return {
     title: { absolute: dict.seo.title },
@@ -52,14 +54,16 @@ export async function generateMetadata({
       locale: locale === "en" ? "en_US" : "fr_FR",
       alternateLocale: locale === "en" ? ["fr_FR"] : ["en_US"],
       url: canonical,
-      siteName: `${profile.name} Portfolio`,
+      siteName: dict.seo.websiteName,
       title: dict.seo.title,
       description: dict.seo.description,
+      images: openGraphImages,
     },
     twitter: {
       card: "summary_large_image",
       title: dict.seo.title,
       description: dict.seo.description,
+      images: openGraphImages.map((image) => image.url),
     },
   };
 }
