@@ -26,7 +26,7 @@ type Props = {
 };
 
 /**
- * Liste déroulante accessible — déclencheur cliquable minimal pour l’UX inline.
+ * Liste déroulante accessible : déclencheur cliquable minimal pour l’UX inline.
  */
 export function DemoSelect({
   value,

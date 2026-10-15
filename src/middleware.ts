@@ -1,7 +1,23 @@
 import type { NextRequest } from "next/server";
 import { NextResponse } from "next/server";
+import { defaultLocale, isLocale } from "@/i18n/config";
 
 const CANONICAL_HOST = "alexis-romney.com";
+
+const LOCALE_PREFIX_RE = /^\/(fr|en)(\/|$)/;
+
+function shouldSkipLocale(pathname: string): boolean {
+  return (
+    pathname.startsWith("/_next") ||
+    pathname.startsWith("/api") ||
+    pathname.startsWith("/gestion-demandes") ||
+    pathname === "/favicon.ico" ||
+    pathname === "/robots.txt" ||
+    pathname === "/sitemap.xml" ||
+    pathname === "/icon" ||
+    /\.[a-zA-Z0-9]+$/.test(pathname)
+  );
+}
 
 /**
  * Consolidate host variants on the production domain:
@@ -21,14 +37,30 @@ export function middleware(request: NextRequest) {
     return NextResponse.redirect(url, 308);
   }
 
+  const { pathname } = request.nextUrl;
+
+  if (shouldSkipLocale(pathname)) {
+    return NextResponse.next();
+  }
+
+  if (pathname === "/") {
+    const url = request.nextUrl.clone();
+    url.pathname = `/${defaultLocale}`;
+    return NextResponse.redirect(url);
+  }
+
+  const match = pathname.match(LOCALE_PREFIX_RE);
+  if (match && !isLocale(match[1])) {
+    const url = request.nextUrl.clone();
+    url.pathname = `/${defaultLocale}${pathname}`;
+    return NextResponse.redirect(url);
+  }
+
   return NextResponse.next();
 }
 
 export const config = {
   matcher: [
-    /*
-     * Skip Next internals and common static assets.
-     */
     "/((?!_next/static|_next/image|favicon.ico|.*\\.(?:svg|png|jpg|jpeg|gif|webp|ico|woff2?)$).*)",
   ],
 };

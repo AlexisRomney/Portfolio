@@ -87,7 +87,7 @@ export async function triggerProcessTicketIfEligible(
   );
   if (!secret) {
     console.error(
-      "[analyze-request] TRIGGER_SECRET_KEY manquante — automation non déclenchée",
+      "[analyze-request] TRIGGER_SECRET_KEY manquante : automation non déclenchée",
       { ticketId: ticket.id },
     );
     return { triggered: false, skippedReason: "trigger_not_configured" };

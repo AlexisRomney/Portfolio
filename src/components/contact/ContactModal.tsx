@@ -10,11 +10,7 @@ import {
 } from "react";
 import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 import { Button } from "@/components/ui/Button";
-import {
-  contactUiCopy,
-  resolveContactUiLocale,
-  type ContactUiLocale,
-} from "@/lib/contact/contact-ui-copy";
+import { useLocale, usePortfolioDictionary } from "@/components/providers/LocaleProvider";
 import {
   CONTACT_LIMITS,
   type ContactFieldErrors,
@@ -47,8 +43,9 @@ export function ContactModal({ open, onClose }: ContactModalProps) {
   const [errors, setErrors] = useState<ContactFieldErrors>({});
   const [status, setStatus] = useState<Status>("idle");
   const [serverError, setServerError] = useState("");
-  const [locale, setLocale] = useState<ContactUiLocale>("fr");
-  const copy = contactUiCopy[locale];
+  const locale = useLocale();
+  const dict = usePortfolioDictionary();
+  const copy = dict.contact;
 
   const reset = useCallback(() => {
     setForm(initialForm);
@@ -66,8 +63,6 @@ export function ContactModal({ open, onClose }: ContactModalProps) {
       const t = window.setTimeout(reset, 300);
       return () => window.clearTimeout(t);
     }
-
-    setLocale(resolveContactUiLocale(document.documentElement.lang));
 
     const previousOverflow = document.body.style.overflow;
     document.body.style.overflow = "hidden";
@@ -98,7 +93,7 @@ export function ContactModal({ open, onClose }: ContactModalProps) {
       const response = await fetch("/api/contact", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(form),
+        body: JSON.stringify({ ...form, locale }),
       });
       const data = (await response.json().catch(() => null)) as {
         ok?: boolean;
@@ -130,9 +125,7 @@ export function ContactModal({ open, onClose }: ContactModalProps) {
           process.env.NODE_ENV !== "production" && data?.code
             ? ` (${data.code}${data.missing?.length ? `: ${data.missing.join(", ")}` : ""}${data.resendMessage ? `, ${data.resendMessage}` : ""})`
             : "";
-        setServerError(
-          (data?.error || "Impossible d’envoyer le message.") + detail,
-        );
+        setServerError((data?.error || copy.serverError) + detail);
         setStatus("error");
         return;
       }
@@ -147,7 +140,7 @@ export function ContactModal({ open, onClose }: ContactModalProps) {
 
       setStatus("success");
     } catch {
-      setServerError("Impossible d’envoyer le message.");
+      setServerError(copy.serverError);
       setStatus("error");
     }
   }
@@ -164,7 +157,7 @@ export function ContactModal({ open, onClose }: ContactModalProps) {
         >
           <button
             type="button"
-            aria-label="Fermer la fenêtre de contact"
+            aria-label={copy.closeDialog}
             className="absolute inset-0 bg-[color-mix(in_oklab,var(--ink)_72%,transparent)] backdrop-blur-md"
             onClick={handleClose}
           />
@@ -201,7 +194,7 @@ export function ContactModal({ open, onClose }: ContactModalProps) {
                 type="button"
                 onClick={handleClose}
                 className="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-white/12 text-[var(--paper)] transition-colors hover:border-[var(--accent)] hover:text-[var(--accent)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--accent)]"
-                aria-label="Fermer"
+                aria-label={copy.close}
               >
                 <span aria-hidden className="text-lg leading-none">
                   ×
@@ -213,19 +206,17 @@ export function ContactModal({ open, onClose }: ContactModalProps) {
               {status === "success" ? (
                 <div className="space-y-4 py-6 text-center">
                   <p className="font-display text-2xl text-[var(--paper)]">
-                    Message envoyé
+                    {copy.successTitle}
                   </p>
-                  <p className="text-sm text-[var(--muted)]">
-                    Merci. Je reviens vers vous dès que possible.
-                  </p>
+                  <p className="text-sm text-[var(--muted)]">{copy.successBody}</p>
                   <Button type="button" onClick={handleClose}>
-                    Fermer
+                    {copy.close}
                   </Button>
                 </div>
               ) : (
                 <form className="space-y-4" onSubmit={onSubmit} noValidate>
                   <Field
-                    label="Nom"
+                    label={copy.fields.name}
                     name="name"
                     autoComplete="name"
                     value={form.name}
@@ -235,7 +226,7 @@ export function ContactModal({ open, onClose }: ContactModalProps) {
                     onChange={(value) => setForm((f) => ({ ...f, name: value }))}
                   />
                   <Field
-                    label="Email"
+                    label={copy.fields.email}
                     name="email"
                     type="email"
                     autoComplete="email"
@@ -248,7 +239,7 @@ export function ContactModal({ open, onClose }: ContactModalProps) {
                     }
                   />
                   <Field
-                    label="Sujet"
+                    label={copy.fields.subject}
                     name="subject"
                     value={form.subject}
                     maxLength={CONTACT_LIMITS.subject.max}
@@ -259,7 +250,7 @@ export function ContactModal({ open, onClose }: ContactModalProps) {
                     }
                   />
                   <Field
-                    label="Message"
+                    label={copy.fields.message}
                     name="message"
                     as="textarea"
                     value={form.message}
@@ -302,12 +293,10 @@ export function ContactModal({ open, onClose }: ContactModalProps) {
                       onClick={handleClose}
                       disabled={status === "submitting"}
                     >
-                      Annuler
+                      {copy.cancel}
                     </Button>
                     <Button type="submit" disabled={status === "submitting"}>
-                      {status === "submitting"
-                        ? "Envoi en cours…"
-                        : "Envoyer le message"}
+                      {status === "submitting" ? copy.submitting : copy.submit}
                     </Button>
                   </div>
                 </form>

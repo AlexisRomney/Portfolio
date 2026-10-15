@@ -73,7 +73,7 @@ function isProductionRuntime(): boolean {
   );
 }
 
-/** Force Gemini indisponible — uniquement hors production. */
+/** Force Gemini indisponible, uniquement hors production. */
 export function isGeminiForcedUnavailable(): boolean {
   if (isProductionRuntime()) return false;
   const flag = process.env.AI_FORCE_GEMINI_UNAVAILABLE?.trim().toLowerCase();

@@ -2,6 +2,9 @@
 
 import { motion, useReducedMotion } from "motion/react";
 import { getShowcaseProjects, type Project } from "@/data/projects";
+import { useLocale, usePortfolioDictionary } from "@/components/providers/LocaleProvider";
+import { resolveDemoHref } from "@/lib/gestion-demandes-url";
+import type { PortfolioDictionary } from "@/i18n/portfolio-dictionary";
 import { ExternalLinkIcon } from "@/components/icons/SocialIcons";
 import { MockupFrame } from "@/components/ui/MockupFrame";
 import { Reveal } from "@/components/ui/Reveal";
@@ -9,31 +12,38 @@ import { Section } from "@/components/ui/Section";
 import { easeOut } from "@/lib/motion";
 
 export function Projects() {
-  const items = getShowcaseProjects();
+  const locale = useLocale();
+  const dict = usePortfolioDictionary();
+  const items = getShowcaseProjects(locale);
 
   return (
     <Section
       id="projets"
-      eyebrow="Réalisations"
-      title="Produits livrés & études de cas"
-      description={
-        <>
-          Exemples concrets de sites, outils métier, automatisation et IA,
-          pour illustrer la diversité des solutions possibles.
-        </>
-      }
+      eyebrow={dict.projects.eyebrow}
+      title={dict.projects.title}
+      description={dict.projects.description}
     >
       <div className="flex flex-col gap-8">
         {items.map((project, i) => (
-          <ProjectRow key={project.id} project={project} index={i} />
+          <ProjectRow key={project.id} project={project} index={i} dict={dict} />
         ))}
       </div>
     </Section>
   );
 }
 
-function ProjectRow({ project, index }: { project: Project; index: number }) {
+function ProjectRow({
+  project,
+  index,
+  dict,
+}: {
+  project: Project;
+  index: number;
+  dict: PortfolioDictionary;
+}) {
   const reduce = useReducedMotion();
+  const locale = useLocale();
+  const demoHref = resolveDemoHref(project.demoUrl, locale);
   const visual = project.visuals[0];
   const reverse = index % 2 === 1;
 
@@ -57,13 +67,13 @@ function ProjectRow({ project, index }: { project: Project; index: number }) {
           <dl className="mt-6 grid gap-4 sm:grid-cols-2">
             <div>
               <dt className="font-mono text-[0.6rem] uppercase tracking-[0.2em] text-[var(--accent)]">
-                Problème
+                {dict.projects.problem}
               </dt>
               <dd className="mt-2 text-sm text-[var(--muted)]">{project.problem}</dd>
             </div>
             <div>
               <dt className="font-mono text-[0.6rem] uppercase tracking-[0.2em] text-[var(--accent)]">
-                Solution
+                {dict.projects.solution}
               </dt>
               <dd className="mt-2 text-sm text-[var(--muted)]">{project.solution}</dd>
             </div>
@@ -79,21 +89,19 @@ function ProjectRow({ project, index }: { project: Project; index: number }) {
             ))}
           </ul>
           <div className="mt-6">
-            {project.demoUrl ? (
+            {demoHref ? (
               <a
-                href={project.demoUrl}
-                {...(project.demoUrl.startsWith("http")
+                href={demoHref}
+                {...(demoHref.startsWith("http")
                   ? { target: "_blank", rel: "noopener noreferrer" }
                   : {})}
                 className="inline-flex items-center gap-2 text-sm text-[var(--accent)] transition-colors hover:text-[var(--accent-soft)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--accent)]"
               >
-                Voir le projet
+                {dict.projects.viewProject}
                 <ExternalLinkIcon className="h-3.5 w-3.5" />
               </a>
             ) : (
-              <span className="text-sm text-[var(--steel)]">
-                Lien bientôt disponible
-              </span>
+              <span className="text-sm text-[var(--steel)]">{dict.projects.linkSoon}</span>
             )}
           </div>
         </div>

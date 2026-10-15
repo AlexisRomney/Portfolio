@@ -162,7 +162,7 @@ export const DEMO_TICKETS_EN: Record<string, DemoTicketLocalizedContent> = {
     controlSummary: "Technical incident correctly analyzed and routed.",
   },
   "77777777-7777-4777-8777-777777777777": {
-    subject: "Urgent request — needs clarification",
+    subject: "Urgent request, needs clarification",
     message:
       "Hello, there is an issue with my file. It may be about the invoice, or access, I'm not sure. Someone should look into it quickly.",
     subcategory: null,

@@ -124,7 +124,7 @@ export function recordProviderQuotaExceeded(input: {
   if (recipient && emailQueued) {
     queueEmail({
       to: recipient,
-      subject: `⚠️ Assistant IA — quota ${label} dépassé`,
+      subject: `⚠️ Assistant IA : quota ${label} dépassé`,
       body: [
         `Fournisseur :`,
         label,
@@ -185,7 +185,7 @@ export function recordAllProvidersUnavailable(input: {
   if (recipient && emailQueued) {
     queueEmail({
       to: recipient,
-      subject: "🚨 Assistant IA — tous les fournisseurs indisponibles",
+      subject: "🚨 Assistant IA : tous les fournisseurs indisponibles",
       body: [
         "Fournisseurs :",
         "Gemini, OpenRouter et Groq",

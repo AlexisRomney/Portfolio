@@ -38,7 +38,7 @@ export function applyDemoAutomationEligibility(
     requiresHumanReview: false,
     reviewReason: null,
     controlSummary: control.controlSummary
-      ? `${control.controlSummary} — ${note}`
+      ? `${control.controlSummary}. ${note}`
       : note,
   };
 }

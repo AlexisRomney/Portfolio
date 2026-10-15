@@ -5,23 +5,16 @@ import { useReducedMotion } from "motion/react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { getFeaturedProject } from "@/data/projects";
+import { useLocale, usePortfolioDictionary } from "@/components/providers/LocaleProvider";
+import { resolveDemoHref } from "@/lib/gestion-demandes-url";
 import { ButtonLink } from "@/components/ui/ButtonLink";
 import { MockupFrame } from "@/components/ui/MockupFrame";
 import { Reveal } from "@/components/ui/Reveal";
 
-const pipeline = [
-  "Réception",
-  "Analyse IA",
-  "Catégorisation",
-  "Priorisation",
-  "Sentiment",
-  "Routage",
-  "Workflow",
-  "Suivi",
-];
-
 export function FeaturedAI() {
-  const project = getFeaturedProject();
+  const locale = useLocale();
+  const dict = usePortfolioDictionary();
+  const project = getFeaturedProject(locale);
   const reduce = useReducedMotion();
   const stageRef = useRef<HTMLDivElement>(null);
 
@@ -52,6 +45,7 @@ export function FeaturedAI() {
   }, [project, reduce]);
 
   if (!project) return null;
+  const demoHref = resolveDemoHref(project.demoUrl, locale);
   const visual = project.visuals[0];
 
   return (
@@ -79,10 +73,10 @@ export function FeaturedAI() {
         <div
           ref={stageRef}
           className="mt-14 overflow-x-auto pb-2"
-          aria-label="Pipeline d’automatisation"
+          aria-label={dict.featuredAi.pipelineAria}
         >
           <ol className="flex min-w-max gap-3 sm:min-w-0 sm:flex-wrap">
-            {pipeline.map((step) => (
+            {dict.featuredAi.pipelineSteps.map((step) => (
               <li
                 key={step}
                 data-pipe
@@ -105,9 +99,9 @@ export function FeaturedAI() {
         <div className="mt-16 grid gap-10 lg:grid-cols-[1.1fr_0.9fr]">
           <Reveal delay={0.1}>
             <div className="space-y-8">
-              <Block label="Problème" text={project.problem} />
-              <Block label="Solution" text={project.solution} />
-              <Block label="Résultat" text={project.result} />
+              <Block label={dict.featuredAi.problem} text={project.problem} />
+              <Block label={dict.featuredAi.solution} text={project.solution} />
+              <Block label={dict.featuredAi.result} text={project.result} />
             </div>
           </Reveal>
 
@@ -118,28 +112,27 @@ export function FeaturedAI() {
                 className="absolute -right-10 -top-10 h-40 w-40 rounded-full bg-[color-mix(in_oklab,var(--accent)_18%,transparent)] blur-2xl"
               />
               <p className="font-mono text-[0.65rem] uppercase tracking-[0.24em] text-[var(--steel)]">
-                Démonstration
+                {dict.featuredAi.demoEyebrow}
               </p>
               <h3 className="mt-4 font-display text-2xl text-[var(--paper)]">
-                Démonstration interactive
+                {dict.featuredAi.demoTitle}
               </h3>
               <p className="mt-3 text-sm leading-relaxed text-[var(--muted)]">
-                Ouvrez l’application intégrée au portfolio pour manipuler le
-                produit : analyse, demandes, réponses et automatisations.
+                {dict.featuredAi.demoBody}
               </p>
               <div className="mt-8">
-                {project.demoUrl ? (
-                  <ButtonLink href={project.demoUrl}>
-                    {project.demoLabel ?? "Voir la démonstration"}
+                {demoHref ? (
+                  <ButtonLink href={demoHref}>
+                    {project.demoLabel ?? dict.featuredAi.demoCta}
                   </ButtonLink>
                 ) : (
                   <span className="inline-flex cursor-default items-center gap-2 rounded-full border border-white/12 bg-white/[0.03] px-5 py-2.5 text-sm text-[var(--steel)]">
-                    {project.demoLabel ?? "Voir la démonstration"}
+                    {project.demoLabel ?? dict.featuredAi.demoCta}
                   </span>
                 )}
               </div>
               <p className="mt-8 text-sm text-[var(--muted)]">
-                <span className="text-[var(--paper)]">Rôle : </span>
+                <span className="text-[var(--paper)]">{dict.featuredAi.role}</span>
                 {project.role}
               </p>
               <ul className="mt-5 flex flex-wrap gap-2">

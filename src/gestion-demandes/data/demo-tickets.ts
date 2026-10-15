@@ -292,7 +292,7 @@ export const DEMO_TICKETS: Ticket[] = [
     id: "77777777-7777-4777-8777-777777777777",
     name: "Nadia Cohen",
     email: "nadia.cohen@exemple.fr",
-    subject: "Demande urgente — à clarifier",
+    subject: "Demande urgente à clarifier",
     message:
       "Bonjour, il y a un souci avec mon dossier. Ça concerne peut-être la facture, ou alors l'accès, je ne sais plus. Il faudrait quelqu'un rapidement.",
     category: "Autre",

@@ -77,8 +77,7 @@ export default function ParametresPage() {
         <Card className="settings-card">
           <h2>{t("settings.aiAutomation")}</h2>
           <p className="muted" style={{ fontSize: "0.88rem", marginBottom: "1rem" }}>
-            Lecture seule dans la démonstration — les réglages globaux ne peuvent
-            pas être modifiés.
+            {t("settings.demoReadOnlyBanner")}
           </p>
           <div className="settings-list">
             <div className="settings-row settings-row-stack">
@@ -133,7 +132,7 @@ export default function ParametresPage() {
           ) : null}
           {automationReady ? (
             <p className="muted" style={{ fontSize: "0.85rem", marginTop: "0.75rem" }}>
-              Lecture seule — aucune modification n’est enregistrée.
+              {t("settings.demoReadOnlyFooter")}
             </p>
           ) : null}
         </Card>

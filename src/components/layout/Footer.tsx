@@ -1,7 +1,11 @@
+"use client";
+
 import { profile } from "@/data/profile";
 import { GitHubIcon, LinkedInIcon } from "@/components/icons/SocialIcons";
+import { usePortfolioDictionary } from "@/components/providers/LocaleProvider";
 
 export function Footer() {
+  const dict = usePortfolioDictionary();
   const year = new Date().getFullYear();
   const hasOrigin = Boolean(profile.githubOrigin);
 
@@ -10,9 +14,7 @@ export function Footer() {
       <div className="mx-auto flex max-w-6xl flex-col gap-6 sm:flex-row sm:items-center sm:justify-between">
         <div>
           <p className="font-display text-lg text-[var(--paper)]">{profile.name}</p>
-          <p className="mt-1 text-sm text-[var(--muted)]">
-            Création Web · Solutions numériques · Automatisation
-          </p>
+          <p className="mt-1 text-sm text-[var(--muted)]">{dict.footer.tagline}</p>
         </div>
         <div className="flex flex-wrap items-center gap-5 text-sm text-[var(--muted)]">
           {hasOrigin ? (

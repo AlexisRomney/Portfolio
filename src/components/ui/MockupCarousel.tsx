@@ -13,6 +13,7 @@ import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 import { cn } from "@/lib/cn";
 import { easeOut } from "@/lib/motion";
 import type { ProjectVisual } from "@/data/projects";
+import { usePortfolioDictionary } from "@/components/providers/LocaleProvider";
 
 type Props = {
   visuals: ProjectVisual[];
@@ -26,8 +27,10 @@ export function MockupCarousel({
   visuals,
   className,
   priority,
-  label = "Galerie du projet",
+  label,
 }: Props) {
+  const dict = usePortfolioDictionary();
+  const carouselLabel = label ?? dict.mockups.carouselDefaultLabel;
   const reduce = useReducedMotion();
   const reactId = useId();
   const [index, setIndex] = useState(0);
@@ -108,7 +111,7 @@ export function MockupCarousel({
       tabIndex={0}
       role="region"
       aria-roledescription="carousel"
-      aria-label={label}
+      aria-label={carouselLabel}
       onKeyDown={onRootKeyDown}
       className={cn(
         "group/carousel relative outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent)]/50 focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--ink)]",
@@ -127,7 +130,7 @@ export function MockupCarousel({
             <span className="h-2.5 w-2.5 rounded-full bg-[#febc2e]/90" />
             <span className="h-2.5 w-2.5 rounded-full bg-[#28c840]/90" />
             <span className="ml-2 truncate font-mono text-[0.6rem] uppercase tracking-[0.16em] text-[var(--steel)]">
-              {frame === "window" ? "Application · Windows" : "Aperçu produit"}
+              {frame === "window" ? dict.mockups.frameWindow : dict.mockups.frameBrowser}
             </span>
             {count > 1 ? (
               <span className="ml-auto font-mono text-[0.6rem] tabular-nums tracking-wide text-[var(--steel)]">
@@ -158,7 +161,7 @@ export function MockupCarousel({
               className="absolute inset-0"
               role="group"
               aria-roledescription="slide"
-              aria-label={`${index + 1} sur ${count}`}
+              aria-label={dict.mockups.slideOf(index + 1, count)}
               id={`${reactId}-slide-${index}`}
             >
               <Image
@@ -180,17 +183,17 @@ export function MockupCarousel({
         <div className="mt-4 flex items-center justify-between gap-3">
           <div className="flex items-center gap-2">
             <CarouselButton
-              label="Image précédente"
+              label={dict.mockups.prevImage}
               onClick={prev}
               icon="prev"
             />
-            <CarouselButton label="Image suivante" onClick={next} icon="next" />
+            <CarouselButton label={dict.mockups.nextImage} onClick={next} icon="next" />
           </div>
 
           <div
             className="flex items-center gap-1.5"
             role="tablist"
-            aria-label="Indicateurs de slide"
+            aria-label={dict.mockups.slideIndicators}
           >
             {visuals.map((v, i) => (
               <button
@@ -198,7 +201,7 @@ export function MockupCarousel({
                 type="button"
                 role="tab"
                 aria-selected={i === index}
-                aria-label={`Aller à l’image ${i + 1}`}
+                aria-label={dict.mockups.goToImage(i + 1)}
                 onClick={() => goTo(i, i > index ? 1 : -1)}
                 className={cn(
                   "h-2 rounded-full transition-[width,background-color] duration-300 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--accent)]",

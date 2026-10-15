@@ -218,7 +218,7 @@ export function TicketOwnerField({ ticket }: Props) {
       <span className="meta-value">
         {ticket.assigneeName
           ? `${ticket.assigneeName}${
-              ticket.department ? ` — ${departmentLabel(ticket.department)}` : ""
+              ticket.department ? ` (${departmentLabel(ticket.department)})` : ""
             }`
           : t("routing.unassigned")}
       </span>

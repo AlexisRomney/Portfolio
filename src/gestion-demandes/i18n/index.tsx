@@ -100,6 +100,13 @@ export function LocaleProvider({ children }: { children: ReactNode }) {
     window.dispatchEvent(new Event(LOCALE_CHANGE_EVENT));
   }, []);
 
+  useEffect(() => {
+    const lang = new URLSearchParams(window.location.search).get("lang");
+    if (lang === "fr" || lang === "en") {
+      setLocale(lang);
+    }
+  }, [setLocale]);
+
   const value = useMemo<I18nContextValue>(() => {
     const t = (key: TranslationKey) => dictionaries[locale][key];
     return {

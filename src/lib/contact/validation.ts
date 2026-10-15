@@ -25,12 +25,31 @@ export type ContactFieldErrors = Partial<
   Record<"name" | "email" | "subject" | "message", string>
 >;
 
+export type ContactValidationMessages = {
+  invalidData: string;
+  name: string;
+  email: string;
+  subject: string;
+  message: string;
+};
+
+const defaultMessages: ContactValidationMessages = {
+  invalidData: "Données invalides.",
+  name: "Indiquez votre nom.",
+  email: "Adresse e-mail invalide.",
+  subject: "Indiquez un sujet.",
+  message: "Message trop court.",
+};
+
 export function sanitizeText(value: unknown, max: number): string {
   if (typeof value !== "string") return "";
   return value.replace(/\0/g, "").normalize("NFKC").trim().slice(0, max);
 }
 
-export function validateContactPayload(input: unknown): {
+export function validateContactPayload(
+  input: unknown,
+  messages: ContactValidationMessages = defaultMessages,
+): {
   ok: true;
   data: Required<Omit<ContactPayload, "website_url">> & { website_url: string };
 } | {
@@ -41,7 +60,7 @@ export function validateContactPayload(input: unknown): {
   if (!input || typeof input !== "object") {
     return {
       ok: false,
-      errors: { message: "Données invalides." },
+      errors: { message: messages.invalidData },
     };
   }
 
@@ -61,16 +80,16 @@ export function validateContactPayload(input: unknown): {
   const errors: ContactFieldErrors = {};
 
   if (name.length < CONTACT_LIMITS.name.min) {
-    errors.name = "Indiquez votre nom.";
+    errors.name = messages.name;
   }
   if (!EMAIL_RE.test(email) || email.length < CONTACT_LIMITS.email.min) {
-    errors.email = "Adresse e-mail invalide.";
+    errors.email = messages.email;
   }
   if (subject.length < CONTACT_LIMITS.subject.min) {
-    errors.subject = "Indiquez un sujet.";
+    errors.subject = messages.subject;
   }
   if (message.length < CONTACT_LIMITS.message.min) {
-    errors.message = "Message trop court.";
+    errors.message = messages.message;
   }
 
   if (Object.keys(errors).length > 0) {

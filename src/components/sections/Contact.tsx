@@ -1,12 +1,8 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { profile } from "@/data/profile";
-import {
-  contactUiCopy,
-  resolveContactUiLocale,
-  type ContactUiLocale,
-} from "@/lib/contact/contact-ui-copy";
+import { usePortfolioDictionary } from "@/components/providers/LocaleProvider";
 import { ContactModal } from "@/components/contact/ContactModal";
 import { GitHubIcon, LinkedInIcon } from "@/components/icons/SocialIcons";
 import { Button } from "@/components/ui/Button";
@@ -16,14 +12,8 @@ import { Reveal } from "@/components/ui/Reveal";
 
 export function Contact() {
   const [open, setOpen] = useState(false);
-  const [locale, setLocale] = useState<ContactUiLocale>("fr");
+  const dict = usePortfolioDictionary();
   const hasOrigin = Boolean(profile.githubOrigin);
-
-  useEffect(() => {
-    setLocale(resolveContactUiLocale(document.documentElement.lang));
-  }, []);
-
-  const copy = contactUiCopy[locale];
 
   return (
     <section
@@ -40,17 +30,17 @@ export function Contact() {
             <ProfilePhoto size="lg" />
           </div>
           <p className="mb-4 font-mono text-[0.7rem] uppercase tracking-[0.28em] text-[var(--accent)]">
-            Contact
+            {dict.contact.eyebrow}
           </p>
           <h2 className="font-display text-[clamp(2.4rem,6vw,4.5rem)] font-medium leading-[1.02] tracking-[-0.04em] text-[var(--paper)]">
-            Parlons de votre projet
+            {dict.contact.title}
           </h2>
           <p className="mx-auto mt-6 max-w-2xl text-base leading-relaxed text-[var(--muted)] sm:text-lg">
-            {copy.intro}
+            {dict.contact.intro}
           </p>
           <div className="mt-10 flex flex-wrap items-center justify-center gap-3">
             <Button type="button" onClick={() => setOpen(true)}>
-              {copy.primaryCta}
+              {dict.contact.primaryCta}
             </Button>
             {hasOrigin ? (
               <ButtonLink

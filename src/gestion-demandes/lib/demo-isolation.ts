@@ -12,7 +12,7 @@ export function isDemoMode(): boolean {
   return true;
 }
 
-/** @deprecated alias — conserve la compatibilité des imports existants */
+/** @deprecated alias ; conserve la compatibilité des imports existants */
 export function isDemoIsolated(): boolean {
   return isDemoMode();
 }

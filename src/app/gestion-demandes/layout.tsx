@@ -17,7 +17,7 @@ const demoPath = "/gestion-demandes";
 const demoUrl = `${siteUrl}${demoPath}`;
 
 export const metadata: Metadata = {
-  title: "Assistant IA — Gestion des demandes",
+  title: "Assistant IA · Gestion des demandes",
   description:
     "Démonstration interactive : transformez automatiquement les demandes clients en décisions métier exploitables grâce à l’analyse IA, au routage et à l’automatisation.",
   robots: { index: true, follow: true },
@@ -29,13 +29,13 @@ export const metadata: Metadata = {
     locale: "fr_FR",
     url: demoUrl,
     siteName: "Alexis Romney Portfolio",
-    title: "Assistant IA — Gestion des demandes",
+    title: "Assistant IA · Gestion des demandes",
     description:
       "Démonstration interactive d’un assistant IA de gestion des demandes : analyse, classification, routage et automatisation.",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Assistant IA — Gestion des demandes",
+    title: "Assistant IA · Gestion des demandes",
     description:
       "Démonstration interactive d’un assistant IA de gestion des demandes : analyse, classification, routage et automatisation.",
   },

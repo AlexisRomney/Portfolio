@@ -26,7 +26,7 @@ type TicketsContextValue = {
   refresh: () => Promise<void>;
   getById: (id: string) => Ticket | undefined;
   upsertTicket: (ticket: Ticket) => void;
-  /** Override local (localStorage) — ne touche pas Neon. */
+  /** Override local (localStorage), ne touche pas Neon. */
   applyLocalTicketPatch: (
     ticketId: string,
     patch: TicketLocalOverride,

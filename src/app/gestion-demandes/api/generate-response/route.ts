@@ -79,7 +79,7 @@ export async function POST(request: Request) {
         ? String((body.ticket as { id: string }).id).trim()
         : "";
 
-  // En démo : exiger un ticket démo persisté — ne jamais faire confiance au body seul.
+  // En démo : exiger un ticket démo persisté ; ne jamais faire confiance au body seul.
   if (isDemoMode()) {
     if (!ticketId) {
       return NextResponse.json(

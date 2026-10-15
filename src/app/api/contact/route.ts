@@ -1,5 +1,7 @@
 import { Resend } from "resend";
 import { getClientIp, checkRateLimit } from "@/lib/contact/rate-limit";
+import { isLocale, type Locale } from "@/i18n/config";
+import { getPortfolioDictionary } from "@/i18n/portfolio-dictionary";
 import { validateContactPayload } from "@/lib/contact/validation";
 
 export const runtime = "nodejs";
@@ -11,8 +13,19 @@ export const runtime = "nodejs";
  */
 const CONTACT_INBOX = "Alexis.romney@hotmail.fr";
 
-const GENERIC_ERROR =
-  "Impossible d’envoyer le message pour le moment. Réessayez plus tard.";
+function localeFromRequest(request: Request, body?: unknown): Locale {
+  if (body && typeof body === "object" && "locale" in body) {
+    const raw = String((body as Record<string, unknown>).locale);
+    if (isLocale(raw)) return raw;
+  }
+  const accept = request.headers.get("accept-language") ?? "";
+  if (/\ben(-|;|,|$)/i.test(accept)) return "en";
+  return "fr";
+}
+
+function apiError(locale: Locale): string {
+  return getPortfolioDictionary(locale).contactApi.genericError;
+}
 
 /** Diagnostic codes for local debugging — never include secrets. */
 type DiagnosticCode =
@@ -54,11 +67,12 @@ export async function POST(request: Request) {
   const debug = isDevDiagnosticEnabled();
   const ip = getClientIp(request);
   const limit = checkRateLimit(`contact:${ip}`);
+  const fallbackLocale = localeFromRequest(request);
   if (!limit.allowed) {
     return json(
       {
         ok: false,
-        error: GENERIC_ERROR,
+        error: apiError(fallbackLocale),
         ...(debug ? { code: "rate_limited" as DiagnosticCode } : {}),
       },
       429,
@@ -75,14 +89,17 @@ export async function POST(request: Request) {
     return json(
       {
         ok: false,
-        error: GENERIC_ERROR,
+        error: apiError(fallbackLocale),
         ...(debug ? { code: "validation_error" as DiagnosticCode } : {}),
       },
       400,
     );
   }
 
-  const parsed = validateContactPayload(body);
+  const locale = localeFromRequest(request, body);
+  const validationMessages = getPortfolioDictionary(locale).contact.validation;
+
+  const parsed = validateContactPayload(body, validationMessages);
   if (!parsed.ok) {
     if (parsed.honeypot) {
       // Silent success for bots
@@ -97,7 +114,7 @@ export async function POST(request: Request) {
     return json(
       {
         ok: false,
-        error: "Vérifiez les champs du formulaire.",
+        error: validationMessages.formCheck,
         errors: parsed.errors,
         ...(debug ? { code: "validation_error" as DiagnosticCode } : {}),
       },
@@ -119,7 +136,7 @@ export async function POST(request: Request) {
     return json(
       {
         ok: false,
-        error: GENERIC_ERROR,
+        error: apiError(locale),
         ...(debug
           ? {
               code: "missing_env" as DiagnosticCode,
@@ -182,7 +199,7 @@ export async function POST(request: Request) {
       return json(
         {
           ok: false,
-          error: GENERIC_ERROR,
+          error: apiError(locale),
           ...(debug
             ? {
                 code: "resend_error" as DiagnosticCode,
@@ -206,7 +223,7 @@ export async function POST(request: Request) {
       return json(
         {
           ok: false,
-          error: GENERIC_ERROR,
+          error: apiError(locale),
           ...(debug
             ? {
                 code: "resend_error" as DiagnosticCode,
@@ -247,7 +264,7 @@ export async function POST(request: Request) {
     return json(
       {
         ok: false,
-        error: GENERIC_ERROR,
+        error: apiError(locale),
         ...(debug
           ? {
               code: "network_error" as DiagnosticCode,

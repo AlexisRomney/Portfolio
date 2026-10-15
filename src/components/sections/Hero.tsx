@@ -1,48 +1,40 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useRef } from "react";
 import { motion, useMotionTemplate, useMotionValue, useReducedMotion } from "motion/react";
 import { profile } from "@/data/profile";
-import { homeSeo } from "@/data/site-seo";
-import { heroCopy, resolveHeroLocale, type HeroLocale } from "@/lib/hero-copy";
+import { getLocalizedProfile } from "@/data/profile-locale";
+import { useLocale, usePortfolioDictionary } from "@/components/providers/LocaleProvider";
 import { ButtonLink } from "@/components/ui/ButtonLink";
 import { easeOut } from "@/lib/motion";
 import { usePrefersReducedMotion } from "@/lib/use-prefers-reduced-motion";
 
 export function Hero() {
+  const locale = useLocale();
+  const dict = usePortfolioDictionary();
+  const localizedProfile = getLocalizedProfile(locale);
   const reduce = useReducedMotion();
   const ref = useRef<HTMLElement>(null);
   const mx = useMotionValue(50);
   const my = useMotionValue(40);
   const glow = useMotionTemplate`radial-gradient(520px circle at ${mx}% ${my}%, color-mix(in oklab, var(--accent) 22%, transparent), transparent 55%)`;
-  const [locale, setLocale] = useState<HeroLocale>("fr");
-
-  useEffect(() => {
-    setLocale(resolveHeroLocale(document.documentElement.lang));
-  }, []);
-
-  const copy = heroCopy[locale];
-
-  useEffect(() => {
-    if (reduce) return;
-    const el = ref.current;
-    if (!el) return;
-
-    const onMove = (e: PointerEvent) => {
-      const rect = el.getBoundingClientRect();
-      mx.set(((e.clientX - rect.left) / rect.width) * 100);
-      my.set(((e.clientY - rect.top) / rect.height) * 100);
-    };
-
-    el.addEventListener("pointermove", onMove);
-    return () => el.removeEventListener("pointermove", onMove);
-  }, [mx, my, reduce]);
 
   return (
     <section
       id="top"
       ref={ref}
       className="relative isolate flex min-h-[100svh] items-end overflow-hidden px-5 pb-16 pt-28 sm:px-8 sm:pb-24 sm:pt-32 lg:px-16"
+      onPointerMove={
+        reduce
+          ? undefined
+          : (e) => {
+              const el = ref.current;
+              if (!el) return;
+              const rect = el.getBoundingClientRect();
+              mx.set(((e.clientX - rect.left) / rect.width) * 100);
+              my.set(((e.clientY - rect.top) / rect.height) * 100);
+            }
+      }
     >
       <div aria-hidden className="pointer-events-none absolute inset-0 -z-20 hero-grid" />
       <motion.div
@@ -67,11 +59,11 @@ export function Hero() {
             transition={{ duration: 0.7, ease: easeOut }}
             className="mb-6 font-mono text-[0.7rem] uppercase tracking-[0.32em] text-[var(--accent)]"
           >
-            {profile.role}
+            {localizedProfile.role}
           </motion.p>
 
           <h1 className="font-display text-[clamp(2rem,5.5vw,3.75rem)] font-medium leading-[1.02] tracking-[-0.035em] text-[var(--paper)]">
-            {homeSeo.h1}
+            {dict.seo.h1}
           </h1>
 
           <p className="mt-5 font-display text-[clamp(2.2rem,7vw,4.5rem)] font-medium leading-[0.95] tracking-[-0.04em] text-[var(--paper)]">
@@ -84,7 +76,7 @@ export function Hero() {
             transition={{ duration: 0.8, delay: 0.55, ease: easeOut }}
             className="mt-8 max-w-xl text-lg leading-relaxed text-[var(--muted)] sm:text-xl"
           >
-            {copy.mainIntro}
+            {dict.hero.mainIntro}
           </motion.p>
 
           <motion.div
@@ -93,9 +85,9 @@ export function Hero() {
             transition={{ duration: 0.7, delay: 0.75, ease: easeOut }}
             className="mt-10 flex max-w-xl flex-wrap gap-3"
           >
-            <ButtonLink href="#contact">Parlons de votre projet</ButtonLink>
+            <ButtonLink href="#contact">{dict.hero.ctaProject}</ButtonLink>
             <ButtonLink href="#projets" variant="outline">
-              Voir mes réalisations
+              {dict.hero.ctaProjects}
             </ButtonLink>
           </motion.div>
         </div>
@@ -108,7 +100,7 @@ export function Hero() {
         >
           <div className="flex flex-col gap-7 lg:gap-8">
             <ul className="space-y-3.5">
-              {copy.asideBullets.map((item, i) => (
+              {dict.hero.asideBullets.map((item, i) => (
                 <motion.li
                   key={item}
                   initial={reduce ? false : { opacity: 0, x: 12 }}
@@ -125,10 +117,10 @@ export function Hero() {
               ))}
             </ul>
             <p className="text-sm leading-relaxed text-[var(--muted)]">
-              {copy.complement}
+              {dict.hero.complement}
             </p>
             <p className="font-mono text-[0.65rem] uppercase tracking-[0.24em] text-[var(--steel)]">
-              {copy.availability}
+              {dict.hero.availability}
             </p>
           </div>
         </motion.aside>

@@ -69,7 +69,7 @@ export default function DashboardPage() {
               label={t("dashboard.automationRate")}
               value={
                 stats.automationRatePercent === null
-                  ? "—"
+                  ? t("common.notApplicable")
                   : `${stats.automationRatePercent} %`
               }
             />
@@ -77,7 +77,7 @@ export default function DashboardPage() {
               label={t("dashboard.aiScore")}
               value={
                 stats.controlAverageScore === null
-                  ? "—"
+                  ? t("common.notApplicable")
                   : `${Math.round(stats.controlAverageScore * 100)} %`
               }
             />
@@ -156,7 +156,7 @@ export default function DashboardPage() {
                   <span>{t("dashboard.averageScore")}</span>
                   <strong>
                     {stats.controlAverageScore === null
-                      ? "—"
+                      ? t("common.notApplicable")
                       : `${Math.round(stats.controlAverageScore * 100)} %`}
                   </strong>
                 </li>

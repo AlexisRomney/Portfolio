@@ -5,16 +5,22 @@ import { AnimatePresence, motion } from "motion/react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import {
-  journeyEducation,
-  journeyExperiences,
-  type JourneyExperience,
-} from "@/data/profile";
+  getJourneyEducation,
+  getJourneyExperiences,
+} from "@/data/profile-locale";
+import type { JourneyExperience } from "@/data/profile";
+import { useLocale, usePortfolioDictionary } from "@/components/providers/LocaleProvider";
+import type { PortfolioDictionary } from "@/i18n/portfolio-dictionary";
 import { Reveal } from "@/components/ui/Reveal";
 import { Section } from "@/components/ui/Section";
 import { easeOut } from "@/lib/motion";
 import { usePrefersReducedMotion } from "@/lib/use-prefers-reduced-motion";
 
 export function Journey() {
+  const locale = useLocale();
+  const dict = usePortfolioDictionary();
+  const journeyExperiences = getJourneyExperiences(locale);
+  const journeyEducation = getJourneyEducation(locale);
   const reduce = usePrefersReducedMotion();
   const trackRef = useRef<HTMLDivElement>(null);
   const lineRef = useRef<HTMLDivElement>(null);
@@ -67,9 +73,9 @@ export function Journey() {
   return (
     <Section
       id="parcours"
-      eyebrow="Parcours"
-      title="Une évolution entre technique et métier"
-      description="Un parcours construit entre développement, systèmes d’information et compréhension des besoins métiers, avec une évolution progressive vers la conception et le pilotage de solutions numériques."
+      eyebrow={dict.journey.eyebrow}
+      title={dict.journey.title}
+      description={dict.journey.description}
     >
       <div ref={trackRef} className="relative">
         <div
@@ -85,7 +91,13 @@ export function Journey() {
 
         <ol className="space-y-10 sm:space-y-14">
           {featured.map((item, i) => (
-            <FeaturedCard key={item.id} item={item} index={i} reduce={!!reduce} />
+            <FeaturedCard
+              key={item.id}
+              item={item}
+              index={i}
+              reduce={!!reduce}
+              dict={dict}
+            />
           ))}
 
           <li className="relative pl-10 sm:pl-14" data-journey-item>
@@ -95,19 +107,17 @@ export function Journey() {
             />
             <Reveal>
               <p className="font-mono text-[0.65rem] uppercase tracking-[0.22em] text-[var(--steel)]">
-                Premières étapes
+                {dict.journey.earlyEyebrow}
               </p>
               <h3 className="mt-2 font-display text-xl text-[var(--paper)] sm:text-2xl">
-                Développement, applications & premières missions
+                {dict.journey.earlyTitle}
               </h3>
               <p
                 data-reveal-detail
                 className="mt-3 max-w-2xl text-sm leading-relaxed text-[var(--muted)]"
                 style={reduce ? undefined : { opacity: 0 }}
               >
-                Des expériences dans différents environnements et secteurs
-                (web, applications, e-commerce, IT) qui ont posé les bases
-                avant une montée progressive en responsabilité.
+                {dict.journey.earlyBody}
               </p>
             </Reveal>
 
@@ -130,10 +140,10 @@ export function Journey() {
             />
             <Reveal>
               <p className="font-mono text-[0.65rem] uppercase tracking-[0.22em] text-[var(--steel)]">
-                Formations
+                {dict.journey.educationEyebrow}
               </p>
               <h3 className="mt-2 font-display text-xl text-[var(--paper)] sm:text-2xl">
-                Diplômes
+                {dict.journey.educationTitle}
               </h3>
             </Reveal>
             <ul className="mt-6 grid gap-3 sm:grid-cols-2">
@@ -165,10 +175,12 @@ function FeaturedCard({
   item,
   index,
   reduce,
+  dict,
 }: {
   item: JourneyExperience;
   index: number;
   reduce: boolean;
+  dict: PortfolioDictionary;
 }) {
   return (
     <li className="relative pl-10 sm:pl-14" data-journey-item>
@@ -183,7 +195,7 @@ function FeaturedCard({
           className="overflow-hidden rounded-2xl border border-white/12 bg-[linear-gradient(160deg,rgba(255,255,255,0.04),transparent_55%)] p-5 sm:p-7"
         >
           <span className="inline-flex rounded-full border border-[var(--accent)]/35 bg-[color-mix(in_oklab,var(--accent)_12%,transparent)] px-3 py-1 font-mono text-[0.6rem] uppercase tracking-[0.18em] text-[var(--accent)]">
-            {index === 0 ? "Aujourd’hui" : "Expérience clé"}
+            {index === 0 ? dict.journey.featuredToday : dict.journey.featuredKey}
           </span>
 
           <p className="mt-5 font-mono text-xs tracking-wide text-[var(--accent-soft)] sm:text-sm">

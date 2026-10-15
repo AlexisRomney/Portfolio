@@ -113,7 +113,7 @@ export async function sendTicketAssignmentEmail(
   const { ticket, assigneeName, assigneeEmail } = input;
   const department = ticket.department ?? "Service";
   const priority = priorityLabel(ticket.priority);
-  const subject = `Nouvelle demande attribuée — ${ticket.subject}`;
+  const subject = `Nouvelle demande attribuée : ${ticket.subject}`;
 
   const body = [
     `Bonjour ${assigneeName},`,
@@ -133,19 +133,19 @@ export async function sendTicketAssignmentEmail(
     ticket.subject,
     "",
     `Catégorie :`,
-    ticket.category ?? "—",
+    ticket.category ?? "n/d",
     "",
     `Sous-catégorie :`,
-    ticket.subcategory ?? "—",
+    ticket.subcategory ?? "n/d",
     "",
     `Priorité :`,
     priority,
     "",
     `Résumé :`,
-    ticket.summary ?? "—",
+    ticket.summary ?? "n/d",
     "",
     `Action recommandée :`,
-    ticket.recommendedAction ?? ticket.action ?? "—",
+    ticket.recommendedAction ?? ticket.action ?? "n/d",
     "",
     `Message du client :`,
     `"${ticket.message}"`,

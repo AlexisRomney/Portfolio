@@ -1,6 +1,7 @@
 "use client";
 
 import { getProject } from "@/data/projects";
+import { useLocale, usePortfolioDictionary } from "@/components/providers/LocaleProvider";
 import { GitHubIcon } from "@/components/icons/SocialIcons";
 import { ButtonLink } from "@/components/ui/ButtonLink";
 import { MockupCarousel } from "@/components/ui/MockupCarousel";
@@ -8,7 +9,9 @@ import { Reveal } from "@/components/ui/Reveal";
 import { Section } from "@/components/ui/Section";
 
 export function ProjectManagement() {
-  const project = getProject("gestion-projet");
+  const locale = useLocale();
+  const dict = usePortfolioDictionary();
+  const project = getProject("gestion-projet", locale);
   if (!project) return null;
 
   return (
@@ -22,9 +25,9 @@ export function ProjectManagement() {
       <div className="grid gap-10 lg:grid-cols-[0.9fr_1.1fr] lg:items-start">
         <Reveal>
           <div className="space-y-6">
-            <Block label="Problème" text={project.problem} />
-            <Block label="Solution" text={project.solution} />
-            <Block label="Statut" text={project.result} />
+            <Block label={dict.projectManagement.problem} text={project.problem} />
+            <Block label={dict.projectManagement.solution} text={project.solution} />
+            <Block label={dict.projectManagement.status} text={project.result} />
             <ul className="flex flex-wrap gap-2">
               {project.technologies.map((tech) => (
                 <li
@@ -43,7 +46,7 @@ export function ProjectManagement() {
                 rel="noopener noreferrer"
               >
                 <GitHubIcon className="h-4 w-4" />
-                Voir le projet sur GitHub
+                {dict.projectManagement.githubCta}
               </ButtonLink>
             ) : null}
           </div>
@@ -52,7 +55,7 @@ export function ProjectManagement() {
         <Reveal delay={0.1}>
           <MockupCarousel
             visuals={project.visuals}
-            label="Galerie outil de gestion de projet"
+            label={dict.projectManagement.galleryLabel}
           />
         </Reveal>
       </div>

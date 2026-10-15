@@ -5,6 +5,7 @@ import { motion, useReducedMotion } from "motion/react";
 import { cn } from "@/lib/cn";
 import { easeOut } from "@/lib/motion";
 import type { ProjectVisual } from "@/data/projects";
+import { usePortfolioDictionary } from "@/components/providers/LocaleProvider";
 
 type Props = {
   visual: ProjectVisual;
@@ -21,6 +22,7 @@ export function MockupFrame({
   tilt = true,
 }: Props) {
   const reduce = useReducedMotion();
+  const dict = usePortfolioDictionary();
   const frame = visual.frame ?? "browser";
   const width = visual.width ?? 1024;
   const height = visual.height ?? 512;
@@ -50,7 +52,7 @@ export function MockupFrame({
           <span className="h-2.5 w-2.5 rounded-full bg-[#febc2e]/90" />
           <span className="h-2.5 w-2.5 rounded-full bg-[#28c840]/90" />
           <span className="ml-2 truncate font-mono text-[0.6rem] uppercase tracking-[0.16em] text-[var(--steel)]">
-            {frame === "window" ? "Application · Windows" : "Aperçu produit"}
+            {frame === "window" ? dict.mockups.frameWindow : dict.mockups.frameBrowser}
           </span>
         </div>
       ) : null}

@@ -1,5 +1,8 @@
+"use client";
+
 import Image from "next/image";
 import { profile } from "@/data/profile";
+import { usePortfolioDictionary } from "@/components/providers/LocaleProvider";
 import { cn } from "@/lib/cn";
 
 type ProfilePhotoProps = {
@@ -13,11 +16,8 @@ const sizes = {
   lg: "h-28 w-28 text-2xl sm:h-32 sm:w-32 sm:text-3xl",
 } as const;
 
-/**
- * Affiche la photo de profil si `profile.photo` est renseigné,
- * sinon un monogramme cohérent avec l’identité visuelle.
- */
 export function ProfilePhoto({ size = "md", className }: ProfilePhotoProps) {
+  const dict = usePortfolioDictionary();
   const hasPhoto = Boolean(profile.photo);
 
   return (
@@ -31,24 +31,24 @@ export function ProfilePhoto({ size = "md", className }: ProfilePhotoProps) {
       {hasPhoto ? (
         <Image
           src={profile.photo}
-          alt={`Portrait de ${profile.name}`}
+          alt={dict.profile.portraitAlt(profile.name)}
           fill
           className="object-cover"
           sizes={size === "lg" ? "128px" : size === "md" ? "80px" : "48px"}
           priority={size === "lg"}
         />
       ) : (
-        <div
+        <span
+          className="flex h-full w-full items-center justify-center font-display font-medium text-[var(--paper)]"
           aria-hidden
-          className="flex h-full w-full items-center justify-center font-display font-medium tracking-tight text-[var(--accent)]"
         >
-          AR
-        </div>
+          {profile.name
+            .split(" ")
+            .map((part) => part[0])
+            .join("")
+            .slice(0, 2)}
+        </span>
       )}
-      <span
-        aria-hidden
-        className="pointer-events-none absolute inset-0 rounded-full bg-[radial-gradient(circle_at_30%_20%,rgba(198,164,107,0.18),transparent_55%)]"
-      />
     </div>
   );
 }

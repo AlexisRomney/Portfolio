@@ -1445,7 +1445,7 @@
   }
 }
 
-/* —— Landing portfolio —— */
+/* Landing portfolio */
 .landing-shell {
   min-height: 100vh;
   background:
@@ -1466,10 +1466,11 @@
 
 .public-nav {
   display: flex;
-  align-items: center;
+  flex-wrap: wrap;
+  align-items: flex-start;
   justify-content: space-between;
-  gap: 1rem;
-  max-width: 960px;
+  gap: 0.85rem 1.25rem;
+  max-width: 1100px;
   margin: 0 auto;
   padding: 1rem 1.25rem 0.25rem;
 }
@@ -1478,25 +1479,48 @@
   display: inline-flex;
   align-items: center;
   gap: 0.55rem;
+  flex-shrink: 0;
   font-weight: 700;
   color: var(--text);
   text-decoration: none;
 }
 
 .public-nav-links {
+  flex: 1 1 16rem;
+  min-width: 0;
+}
+
+.public-nav-toolbar {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  gap: 0.35rem;
+  justify-content: flex-end;
+  gap: 0.65rem 0.75rem;
+}
+
+.public-nav-group {
+  display: inline-flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem;
+  max-width: 100%;
+}
+
+.public-nav-group--meta {
+  padding-left: 0.75rem;
+  border-left: 1px solid var(--border);
 }
 
 .public-nav-link {
+  display: inline-flex;
+  align-items: center;
   padding: 0.45rem 0.75rem;
   border-radius: 999px;
   color: var(--text-muted);
   text-decoration: none;
   font-weight: 600;
   font-size: 0.92rem;
+  line-height: 1.25;
 }
 
 .public-nav-link:hover {
@@ -1509,14 +1533,41 @@
   background: var(--accent-soft);
 }
 
-@media (max-width: 640px) {
+.public-nav-toolbar .locale-selector {
+  flex-shrink: 0;
+}
+
+@media (max-width: 900px) {
   .public-nav {
     flex-direction: column;
-    align-items: flex-start;
+    align-items: stretch;
   }
 
   .public-nav-links {
+    flex: none;
     width: 100%;
+  }
+
+  .public-nav-toolbar {
+    justify-content: flex-start;
+  }
+
+  .public-nav-group--meta {
+    width: 100%;
+    padding-left: 0;
+    padding-top: 0.65rem;
+    border-left: none;
+    border-top: 1px solid var(--border);
+  }
+}
+
+@media (max-width: 480px) {
+  .public-nav-group {
+    width: 100%;
+  }
+
+  .public-nav-link {
+    max-width: 100%;
   }
 }
 
@@ -1605,13 +1656,25 @@
 }
 
 .landing-note {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 1.25rem;
   border-top: 1px solid var(--border);
   padding-top: 1.25rem;
   color: var(--text-muted);
   font-size: 0.92rem;
 }
 
-/* —— Conversation —— */
+.landing-note p {
+  margin: 0;
+}
+
+.landing-note-cta {
+  flex-shrink: 0;
+}
+
+/* Conversation */
 .detail-workspace {
   display: grid;
   grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.85fr);

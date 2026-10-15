@@ -1,9 +1,12 @@
 "use client";
 
+import { Button } from "@gd/components/ui/Button";
 import { useI18n } from "@gd/i18n";
+import { getPortfolioProjectUrl } from "@gd/lib/portfolio-url";
 
 export default function FonctionnementPage() {
-  const { t } = useI18n();
+  const { locale, t } = useI18n();
+  const portfolioHref = getPortfolioProjectUrl(locale);
   return (
     <div className="landing-page">
       <header className="landing-hero">
@@ -66,9 +69,10 @@ export default function FonctionnementPage() {
       </section>
 
       <section className="landing-note">
-        <p>
-          {t("function.note")}
-        </p>
+        <p>{t("function.note")}</p>
+        <Button href={portfolioHref} variant="secondary" className="landing-note-cta">
+          {t("nav.backToPortfolio")}
+        </Button>
       </section>
     </div>
   );

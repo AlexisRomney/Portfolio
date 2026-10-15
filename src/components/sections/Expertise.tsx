@@ -1,28 +1,35 @@
 "use client";
 
 import {
-  creationWebOffers,
-  digitalisationOffers,
-} from "@/data/expertise";
+  getCreationWebOffers,
+  getDigitalisationOffers,
+} from "@/data/expertise-locale";
+import { useLocale, usePortfolioDictionary } from "@/components/providers/LocaleProvider";
 import { Reveal } from "@/components/ui/Reveal";
 import { Section } from "@/components/ui/Section";
+
 export function Expertise() {
+  const locale = useLocale();
+  const dict = usePortfolioDictionary();
+  const creationWebOffers = getCreationWebOffers(locale);
+  const digitalisationOffers = getDigitalisationOffers(locale);
+
   return (
     <Section
       id="expertise"
       tone="muted"
-      eyebrow="Expertise"
-      title="Partir du besoin, pas de la technologie"
-      description="Pas de formule toute faite : chaque projet part de votre activité, de vos contraintes et de vos objectifs, en France comme à l’international."
+      eyebrow={dict.expertise.eyebrow}
+      title={dict.expertise.title}
+      description={dict.expertise.description}
     >
       <div className="grid gap-12 lg:grid-cols-2 lg:gap-16">
         <OfferColumn
-          eyebrow="Création web et applications"
+          eyebrow={dict.expertise.columnWeb}
           offers={creationWebOffers}
           delayBase={0}
         />
         <OfferColumn
-          eyebrow="Digitalisation et automatisation"
+          eyebrow={dict.expertise.columnDigital}
           offers={digitalisationOffers}
           delayBase={0.08}
         />

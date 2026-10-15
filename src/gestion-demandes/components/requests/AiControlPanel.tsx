@@ -155,7 +155,7 @@ export function AiControlPanel({ ticket }: { ticket: Ticket }) {
             <h3>{t("control.recommended")}</h3>
             <blockquote>
               {t("control.human")}
-              {ticket.reviewReason ? ` — ${ticket.reviewReason}` : ""}
+              {ticket.reviewReason ? `: ${ticket.reviewReason}` : ""}
             </blockquote>
           </div>
         ) : null}
