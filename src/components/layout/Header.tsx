@@ -9,7 +9,6 @@ const links = [
   { href: "#positionnement", label: "Approche" },
   { href: "#expertise", label: "Expertise" },
   { href: "#projets", label: "Réalisations" },
-  { href: "#projet-phare", label: "Projet phare" },
   { href: "#parcours", label: "Parcours" },
 ];
 
