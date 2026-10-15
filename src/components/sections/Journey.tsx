@@ -105,8 +105,8 @@ export function Journey() {
                 className="mt-3 max-w-2xl text-sm leading-relaxed text-[var(--muted)]"
                 style={reduce ? undefined : { opacity: 0 }}
               >
-                Des expériences dans différents environnements et secteurs —
-                web, applications, e-commerce, IT — qui ont posé les bases
+                Des expériences dans différents environnements et secteurs
+                (web, applications, e-commerce, IT) qui ont posé les bases
                 avant une montée progressive en responsabilité.
               </p>
             </Reveal>

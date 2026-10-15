@@ -31,12 +31,37 @@ export function getPortfolioStructuredData() {
         "@type": "WebSite",
         "@id": websiteId,
         url: `${siteUrl}/`,
-        name: `${profile.name} — Portfolio`,
+        name: `${profile.name} · Portfolio`,
         description: homeSeo.description,
         inLanguage: "fr-FR",
         publisher: { "@id": personId },
       },
       person,
+    ],
+  };
+}
+
+/** Breadcrumb for the public demo landing (portfolio home → this demo). */
+export function getGestionDemandesLandingBreadcrumb() {
+  const siteUrl = getSiteUrl();
+  const demoUrl = `${siteUrl}/gestion-demandes`;
+
+  return {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      {
+        "@type": "ListItem",
+        position: 1,
+        name: profile.name,
+        item: `${siteUrl}/`,
+      },
+      {
+        "@type": "ListItem",
+        position: 2,
+        name: "Assistant IA — Gestion des demandes",
+        item: demoUrl,
+      },
     ],
   };
 }

@@ -7,7 +7,6 @@ import { MockupFrame } from "@/components/ui/MockupFrame";
 import { Reveal } from "@/components/ui/Reveal";
 import { Section } from "@/components/ui/Section";
 import { easeOut } from "@/lib/motion";
-import { sectionLinkClass } from "@/lib/section-link";
 
 export function Projects() {
   const items = getShowcaseProjects();
@@ -19,12 +18,8 @@ export function Projects() {
       title="Produits livrés & études de cas"
       description={
         <>
-          Exemples concrets de sites vitrines, e-commerce et projets web livrés
-          — preuves de savoir-faire pour votre future création ou refonte de site
-          internet.{" "}
-          <a href="#contact" className={sectionLinkClass}>
-            Parlons de votre projet web
-          </a>
+          Exemples concrets de sites, outils métier, automatisation et IA,
+          pour illustrer la diversité des solutions possibles.
         </>
       }
     >

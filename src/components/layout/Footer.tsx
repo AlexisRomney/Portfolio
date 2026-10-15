@@ -22,7 +22,7 @@ export function Footer() {
               rel="noopener noreferrer"
               className="transition-colors hover:text-[var(--accent)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--accent)]"
             >
-              GitHub — Origin
+              GitHub Origin
             </a>
           ) : null}
           <a

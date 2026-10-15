@@ -125,7 +125,7 @@ export function FeaturedAI() {
               </h3>
               <p className="mt-3 text-sm leading-relaxed text-[var(--muted)]">
                 Ouvrez l’application intégrée au portfolio pour manipuler le
-                produit — analyse, demandes, réponses et automatisations.
+                produit : analyse, demandes, réponses et automatisations.
               </p>
               <div className="mt-8">
                 {project.demoUrl ? (
@@ -139,7 +139,7 @@ export function FeaturedAI() {
                 )}
               </div>
               <p className="mt-8 text-sm text-[var(--muted)]">
-                <span className="text-[var(--paper)]">Rôle — </span>
+                <span className="text-[var(--paper)]">Rôle : </span>
                 {project.role}
               </p>
               <ul className="mt-5 flex flex-wrap gap-2">

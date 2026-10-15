@@ -1,42 +1,29 @@
 "use client";
 
 import {
-  automationAiOffers,
   creationWebOffers,
+  digitalisationOffers,
 } from "@/data/expertise";
 import { Reveal } from "@/components/ui/Reveal";
 import { Section } from "@/components/ui/Section";
-import { sectionLinkClass } from "@/lib/section-link";
-
 export function Expertise() {
   return (
     <Section
       id="expertise"
       tone="muted"
       eyebrow="Expertise"
-      title="Création de sites web et solutions numériques"
-      description={
-        <>
-          En priorité : sites vitrines, institutionnels et e-commerce pour les
-          professionnels à La Réunion. Automatisation, digitalisation et IA en
-          complément lorsque le besoin le justifie.{" "}
-          <a href="#projets" className={sectionLinkClass}>
-            Voir les réalisations
-          </a>
-        </>
-      }
+      title="Partir du besoin, pas de la technologie"
+      description="Pas de formule toute faite : chaque projet part de votre activité, de vos contraintes et de vos objectifs, en France comme à l’international."
     >
       <div className="grid gap-12 lg:grid-cols-2 lg:gap-16">
         <OfferColumn
-          eyebrow="Création Web"
-          title="Sites, e-commerce & applications"
+          eyebrow="Création web et applications"
           offers={creationWebOffers}
           delayBase={0}
         />
         <OfferColumn
-          eyebrow="Automatisation & IA"
-          title="Processus, workflows & intelligence"
-          offers={automationAiOffers}
+          eyebrow="Digitalisation et automatisation"
+          offers={digitalisationOffers}
           delayBase={0.08}
         />
       </div>
@@ -46,23 +33,18 @@ export function Expertise() {
 
 function OfferColumn({
   eyebrow,
-  title,
   offers,
   delayBase,
 }: {
   eyebrow: string;
-  title: string;
   offers: readonly { id: string; title: string; description: string }[];
   delayBase: number;
 }) {
   return (
     <div>
       <Reveal delay={delayBase}>
-        <p className="font-mono text-[0.65rem] uppercase tracking-[0.24em] text-[var(--accent)]">
+        <h3 className="font-display text-2xl tracking-tight text-[var(--paper)]">
           {eyebrow}
-        </p>
-        <h3 className="mt-3 font-display text-2xl tracking-tight text-[var(--paper)]">
-          {title}
         </h3>
       </Reveal>
       <div className="mt-8 space-y-8">

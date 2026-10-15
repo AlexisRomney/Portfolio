@@ -1,7 +1,12 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { profile } from "@/data/profile";
+import {
+  contactUiCopy,
+  resolveContactUiLocale,
+  type ContactUiLocale,
+} from "@/lib/contact/contact-ui-copy";
 import { ContactModal } from "@/components/contact/ContactModal";
 import { GitHubIcon, LinkedInIcon } from "@/components/icons/SocialIcons";
 import { Button } from "@/components/ui/Button";
@@ -11,7 +16,14 @@ import { Reveal } from "@/components/ui/Reveal";
 
 export function Contact() {
   const [open, setOpen] = useState(false);
+  const [locale, setLocale] = useState<ContactUiLocale>("fr");
   const hasOrigin = Boolean(profile.githubOrigin);
+
+  useEffect(() => {
+    setLocale(resolveContactUiLocale(document.documentElement.lang));
+  }, []);
+
+  const copy = contactUiCopy[locale];
 
   return (
     <section
@@ -31,16 +43,14 @@ export function Contact() {
             Contact
           </p>
           <h2 className="font-display text-[clamp(2.4rem,6vw,4.5rem)] font-medium leading-[1.02] tracking-[-0.04em] text-[var(--paper)]">
-            Parlons de votre projet web
+            Parlons de votre projet
           </h2>
           <p className="mx-auto mt-6 max-w-2xl text-base leading-relaxed text-[var(--muted)] sm:text-lg">
-            Création de site vitrine, e-commerce ou refonte à La Réunion : décrivez
-            votre besoin et je vous réponds avec une approche claire, adaptée à
-            votre activité — sans jargon inutile.
+            {copy.intro}
           </p>
           <div className="mt-10 flex flex-wrap items-center justify-center gap-3">
             <Button type="button" onClick={() => setOpen(true)}>
-              Demander un devis
+              {copy.primaryCta}
             </Button>
             {hasOrigin ? (
               <ButtonLink
@@ -49,7 +59,7 @@ export function Contact() {
                 target="_blank"
                 rel="noopener noreferrer"
               >
-                GitHub — Origin
+                GitHub Origin
               </ButtonLink>
             ) : null}
             <ButtonLink

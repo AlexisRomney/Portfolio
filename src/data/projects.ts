@@ -52,13 +52,13 @@ export const projects: Project[] = [
     name: "Gestion automatisée des demandes",
     eyebrow: "Projet phare · IA & orchestration",
     summary:
-      "Solution métier qui analyse, catégorise, priorise et route les demandes grâce à l’IA — de la réception au suivi.",
+      "Solution métier qui analyse, catégorise, priorise et route les demandes grâce à l’IA, de la réception au suivi.",
     problem:
       "Les équipes perdent du temps à trier manuellement des demandes hétérogènes, avec des priorités floues et un suivi difficile.",
     solution:
-      "Pipeline d’automatisation : ingestion, analyse IA (catégorie, priorité, sentiment, résumé), routage, workflows et gestion des erreurs — avec orchestration (Trigger.dev) et persistance (Neon).",
+      "Pipeline d’automatisation : ingestion, analyse IA, routage, workflows et gestion des erreurs, avec orchestration et persistance.",
     result:
-      "Une base opérationnelle pour traiter plus vite, plus clairement, avec une logique métier traçable — pas seulement une interface.",
+      "Une base opérationnelle pour traiter plus vite et plus clairement, avec une logique métier traçable et pas seulement une interface.",
     role: "Conception produit, architecture, développement, automatisation IA",
     technologies: [
       "Next.js",
@@ -79,7 +79,7 @@ export const projects: Project[] = [
     visuals: [
       {
         src: "/mockups/assistant-demandes-dashboard.webp",
-        alt: "Tableau de bord Assistant IA — KPIs, catégorisation et routage des demandes",
+        alt: "Tableau de bord Assistant IA : KPIs, catégorisation et routage des demandes",
         width: 1024,
         height: 430,
         frame: "browser",
@@ -108,7 +108,7 @@ export const projects: Project[] = [
     visuals: [
       {
         src: "/mockups/optimiseur-accueil.webp",
-        alt: "Écran d’accueil Optimiseur Windows — parcours guidé",
+        alt: "Écran d’accueil Optimiseur Windows, parcours guidé",
         width: 897,
         height: 617,
         frame: "window",
@@ -134,7 +134,7 @@ export const projects: Project[] = [
     name: "Mémo Étudiant",
     eyebrow: "E-commerce · santé",
     summary:
-      "Boutique en ligne de ressources pédagogiques pour les études en santé — mémos, fiches et packs de révision.",
+      "Boutique en ligne de ressources pédagogiques pour les études en santé : mémos, fiches et packs de révision.",
     problem:
       "Les étudiants en santé ont besoin de supports clairs, accessibles et structurés pour réviser efficacement.",
     solution:
@@ -150,7 +150,7 @@ export const projects: Project[] = [
     visuals: [
       {
         src: "/mockups/memo-etudiant-produits.webp",
-        alt: "Catalogue Mémo Étudiant — packs et fiches de révision",
+        alt: "Catalogue Mémo Étudiant : packs et fiches de révision",
         width: 1024,
         height: 458,
         frame: "browser",
@@ -178,7 +178,7 @@ export const projects: Project[] = [
     visuals: [
       {
         src: "/mockups/mailvault-bibliotheque.webp",
-        alt: "Bibliothèque Mail2Mine — images, documents, audio et liens",
+        alt: "Bibliothèque Mail2Mine : images, documents, audio et liens",
         width: 1024,
         height: 466,
         frame: "browser",
@@ -190,7 +190,7 @@ export const projects: Project[] = [
     name: "Association A.F.A.",
     eyebrow: "Site institutionnel · La Réunion",
     summary:
-      "Présence digitale pour Agir · Former · Accompagner — formations animalières et sensibilisation.",
+      "Présence digitale pour Agir · Former · Accompagner, avec formations animalières et sensibilisation.",
     problem:
       "Besoin d’un site clair pour présenter les missions, formations et parcours d’accompagnement.",
     solution:
@@ -206,7 +206,7 @@ export const projects: Project[] = [
     visuals: [
       {
         src: "/mockups/association-afa-home.webp",
-        alt: "Page d’accueil Association A.F.A. — Agir, Former, Accompagner",
+        alt: "Page d’accueil Association A.F.A., Agir, Former, Accompagner",
         width: 1024,
         height: 435,
         frame: "browser",
@@ -224,7 +224,7 @@ export const projects: Project[] = [
     solution:
       "Application web marketplace avec parcours catalogue et architecture prête pour itérations produit.",
     result:
-      "Base produit en préparation — publication dès mise en ligne officielle.",
+      "Base produit en préparation, publication dès mise en ligne officielle.",
     role: "Développement plateforme",
     technologies: ["Web", "Marketplace"],
     demoUrl: null,
@@ -239,7 +239,7 @@ export const projects: Project[] = [
     name: "Outil de gestion de projet",
     eyebrow: "Projet personnel · Agile & Classique",
     summary:
-      "Espace de pilotage projets : tableaux de bord, listes, kanban, tâches et collaboration — en cours de finalisation.",
+      "Espace de pilotage projets : tableaux de bord, listes, kanban, tâches et collaboration, en cours de finalisation.",
     problem:
       "Structurer le suivi de projets, les échéances et la collaboration autour des livrables.",
     solution:
@@ -255,24 +255,24 @@ export const projects: Project[] = [
     visualTone: "product",
     visuals: [
       {
+        src: "/mockups/gestion-projet-kanban.webp",
+        alt: "Board kanban Marketplace CA, stories, to do, test, done",
+        width: 1024,
+        height: 461,
+        frame: "browser",
+      },
+      {
         src: "/mockups/gestion-projet-accueil.webp",
-        alt: "Accueil Gestionnaire de projet — projets et échéances",
+        alt: "Accueil Gestionnaire de projet, projets et échéances",
         width: 1024,
         height: 470,
         frame: "browser",
       },
       {
         src: "/mockups/gestion-projet-liste.webp",
-        alt: "Liste Mes projets — cartes Agile et Classique",
+        alt: "Liste Mes projets, cartes Agile et Classique",
         width: 1024,
         height: 460,
-        frame: "browser",
-      },
-      {
-        src: "/mockups/gestion-projet-kanban.webp",
-        alt: "Board kanban Marketplace CA — stories, to do, test, done",
-        width: 1024,
-        height: 461,
         frame: "browser",
       },
       {

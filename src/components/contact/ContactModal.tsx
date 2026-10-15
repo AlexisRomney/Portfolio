@@ -11,6 +11,11 @@ import {
 import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 import { Button } from "@/components/ui/Button";
 import {
+  contactUiCopy,
+  resolveContactUiLocale,
+  type ContactUiLocale,
+} from "@/lib/contact/contact-ui-copy";
+import {
   CONTACT_LIMITS,
   type ContactFieldErrors,
 } from "@/lib/contact/validation";
@@ -42,6 +47,8 @@ export function ContactModal({ open, onClose }: ContactModalProps) {
   const [errors, setErrors] = useState<ContactFieldErrors>({});
   const [status, setStatus] = useState<Status>("idle");
   const [serverError, setServerError] = useState("");
+  const [locale, setLocale] = useState<ContactUiLocale>("fr");
+  const copy = contactUiCopy[locale];
 
   const reset = useCallback(() => {
     setForm(initialForm);
@@ -59,6 +66,8 @@ export function ContactModal({ open, onClose }: ContactModalProps) {
       const t = window.setTimeout(reset, 300);
       return () => window.clearTimeout(t);
     }
+
+    setLocale(resolveContactUiLocale(document.documentElement.lang));
 
     const previousOverflow = document.body.style.overflow;
     document.body.style.overflow = "hidden";
@@ -119,7 +128,7 @@ export function ContactModal({ open, onClose }: ContactModalProps) {
         if (data?.errors) setErrors(data.errors);
         const detail =
           process.env.NODE_ENV !== "production" && data?.code
-            ? ` (${data.code}${data.missing?.length ? `: ${data.missing.join(", ")}` : ""}${data.resendMessage ? ` — ${data.resendMessage}` : ""})`
+            ? ` (${data.code}${data.missing?.length ? `: ${data.missing.join(", ")}` : ""}${data.resendMessage ? `, ${data.resendMessage}` : ""})`
             : "";
         setServerError(
           (data?.error || "Impossible d’envoyer le message.") + detail,
@@ -181,10 +190,10 @@ export function ContactModal({ open, onClose }: ContactModalProps) {
                   id={titleId}
                   className="mt-1 font-display text-2xl tracking-tight text-[var(--paper)]"
                 >
-                  Me contacter
+                  {copy.primaryCta}
                 </h2>
                 <p id={descId} className="mt-1 text-sm text-[var(--muted)]">
-                  Décrivez brièvement votre besoin — réponse directe par e-mail.
+                  {copy.modalIntro}
                 </p>
               </div>
               <button

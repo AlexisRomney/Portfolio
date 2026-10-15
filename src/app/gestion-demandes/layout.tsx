@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Plus_Jakarta_Sans } from "next/font/google";
 import { AppShell } from "@gd/components/layout/AppShell";
+import { GestionDemandesBreadcrumbLd } from "@gd/components/seo/GestionDemandesBreadcrumbLd";
 import { LocaleProvider } from "@gd/components/providers/LocaleProvider";
 import { getSiteUrl } from "@/lib/site-url";
 import "@gd/styles/globals.css";
@@ -47,6 +48,7 @@ export default function GestionDemandesLayout({
 }) {
   return (
     <div className={`gd-demo-root ${jakarta.variable}`}>
+      <GestionDemandesBreadcrumbLd />
       <LocaleProvider>
         <AppShell>{children}</AppShell>
       </LocaleProvider>

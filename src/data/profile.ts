@@ -4,12 +4,10 @@
 
 export const profile = {
   name: "Alexis Romney",
-  role: "Développeur web freelance · La Réunion",
+  role: "Digitalisation · Solutions numériques · Automatisation",
   tagline:
-    "Sites vitrines, institutionnels et e-commerce sur mesure pour les entreprises et indépendants — avec solutions numériques et automatisation lorsque cela apporte une réelle valeur.",
-  shortBio:
-    "Basé à Saint-Joseph (La Réunion), j’accompagne les professionnels de la création de site internet à la refonte, en passant par le e-commerce et les outils métier adaptés au besoin.",
-  location: "Saint-Joseph, La Réunion · France",
+    "Accompagnement de l’analyse du besoin à la mise en production, en France et à l’international.",
+  location: "La Réunion · France",
   availability: "Ouvert aux missions",
   /**
    * Photo de profil (optionnelle).
@@ -54,7 +52,7 @@ export const journeyExperiences: JourneyExperience[] = [
     period: "Depuis mars 2026",
     emphasis: "featured",
     summary:
-      "Du site vitrine à la solution métier sur mesure, je conçois des outils adaptés à vos besoins — avec la possibilité d’aller plus loin via l’automatisation et l’IA lorsque cela apporte une réelle valeur.",
+      "Du site vitrine à la solution métier sur mesure, je conçois des outils adaptés à vos besoins, avec la possibilité d’aller plus loin via l’automatisation et l’IA lorsque cela apporte une réelle valeur.",
     highlights: [
       "Recueil des besoins, analyse fonctionnelle et spécifications",
       "Sites vitrines, applications métier et solutions web sur mesure",
@@ -74,7 +72,7 @@ export const journeyExperiences: JourneyExperience[] = [
     highlights: [
       "Pilotage des recettes fonctionnelles (UAT) et mises en production",
       "Gestion des incidents, support utilisateurs et tickets applicatifs",
-      "Référent IT E-commerce — intégration articles et commandes via ERP",
+      "Référent IT E-commerce : intégration articles et commandes via ERP",
       "Analyse fonctionnelle, cahiers des charges et cartographie des processus",
     ],
   },
@@ -160,7 +158,7 @@ export const journeyEducation: JourneyEducation[] = [
   },
   {
     id: "supinfo",
-    title: "Master of Science 2 — Expert en Informatique",
+    title: "Master of Science 2, Expert en Informatique",
     org: "Supinfo",
     period: "Novembre 2015 → novembre 2020",
   },

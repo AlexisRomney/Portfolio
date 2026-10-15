@@ -73,7 +73,7 @@ export function WindowsOptimizer() {
               ))}
             </ul>
             <p className="text-sm text-[var(--steel)]">
-              Application desktop — démonstration privée, pas d’URL publique
+              Application desktop en démonstration privée, sans URL publique
               inventée.
             </p>
           </div>

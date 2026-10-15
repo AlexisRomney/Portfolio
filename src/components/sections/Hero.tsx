@@ -1,9 +1,10 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { motion, useMotionTemplate, useMotionValue, useReducedMotion } from "motion/react";
 import { profile } from "@/data/profile";
 import { homeSeo } from "@/data/site-seo";
+import { heroCopy, resolveHeroLocale, type HeroLocale } from "@/lib/hero-copy";
 import { ButtonLink } from "@/components/ui/ButtonLink";
 import { easeOut } from "@/lib/motion";
 import { usePrefersReducedMotion } from "@/lib/use-prefers-reduced-motion";
@@ -14,6 +15,13 @@ export function Hero() {
   const mx = useMotionValue(50);
   const my = useMotionValue(40);
   const glow = useMotionTemplate`radial-gradient(520px circle at ${mx}% ${my}%, color-mix(in oklab, var(--accent) 22%, transparent), transparent 55%)`;
+  const [locale, setLocale] = useState<HeroLocale>("fr");
+
+  useEffect(() => {
+    setLocale(resolveHeroLocale(document.documentElement.lang));
+  }, []);
+
+  const copy = heroCopy[locale];
 
   useEffect(() => {
     if (reduce) return;
@@ -51,8 +59,8 @@ export function Hero() {
         className="pointer-events-none absolute bottom-0 left-0 -z-10 h-64 w-full bg-gradient-to-t from-[var(--ink)] to-transparent"
       />
 
-      <div className="mx-auto grid w-full max-w-6xl gap-12 lg:grid-cols-[1.15fr_0.85fr] lg:items-end">
-        <div>
+      <div className="mx-auto grid w-full max-w-6xl gap-10 lg:grid-cols-[1.12fr_0.88fr] lg:items-end lg:gap-x-16 lg:gap-y-12">
+        <div className="min-w-0">
           <motion.p
             initial={reduce ? false : { opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
@@ -76,16 +84,16 @@ export function Hero() {
             transition={{ duration: 0.8, delay: 0.55, ease: easeOut }}
             className="mt-8 max-w-xl text-lg leading-relaxed text-[var(--muted)] sm:text-xl"
           >
-            {profile.tagline}
+            {copy.mainIntro}
           </motion.p>
 
           <motion.div
             initial={reduce ? false : { opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7, delay: 0.75, ease: easeOut }}
-            className="mt-10 flex flex-wrap gap-3"
+            className="mt-10 flex max-w-xl flex-wrap gap-3"
           >
-            <ButtonLink href="#contact">Parlons de votre projet web</ButtonLink>
+            <ButtonLink href="#contact">Parlons de votre projet</ButtonLink>
             <ButtonLink href="#projets" variant="outline">
               Voir mes réalisations
             </ButtonLink>
@@ -96,31 +104,33 @@ export function Hero() {
           initial={reduce ? false : { opacity: 0, x: 24 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.9, delay: 0.45, ease: easeOut }}
-          className="relative border-t border-white/12 pt-8 lg:border-l lg:border-t-0 lg:pl-10 lg:pt-0"
+          className="relative min-w-0 border-t border-white/12 pt-10 lg:border-l lg:border-t-0 lg:pl-14 lg:pt-1 xl:pl-16"
         >
-          <p className="text-sm leading-relaxed text-[var(--muted)]">{profile.shortBio}</p>
-          <ul className="mt-8 space-y-3">
-            {[
-              "Site vitrine, institutionnel ou e-commerce",
-              "Refonte de site internet existant",
-              "Solutions numériques sur mesure si besoin",
-              "Automatisation et IA lorsque c’est pertinent",
-            ].map((item, i) => (
-              <motion.li
-                key={item}
-                initial={reduce ? false : { opacity: 0, x: 12 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ delay: 0.7 + i * 0.08, duration: 0.5, ease: easeOut }}
-                className="flex items-center gap-3 text-sm text-[var(--paper)]"
-              >
-                <span className="h-px w-6 bg-[var(--accent)]" aria-hidden />
-                {item}
-              </motion.li>
-            ))}
-          </ul>
-          <p className="mt-10 font-mono text-[0.65rem] uppercase tracking-[0.24em] text-[var(--steel)]">
-            {profile.availability}
-          </p>
+          <div className="flex flex-col gap-7 lg:gap-8">
+            <ul className="space-y-3.5">
+              {copy.asideBullets.map((item, i) => (
+                <motion.li
+                  key={item}
+                  initial={reduce ? false : { opacity: 0, x: 12 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ delay: 0.7 + i * 0.08, duration: 0.5, ease: easeOut }}
+                  className="flex items-start gap-3 text-sm leading-snug text-[var(--paper)]"
+                >
+                  <span
+                    className="mt-[0.55rem] h-px w-6 shrink-0 bg-[var(--accent)]"
+                    aria-hidden
+                  />
+                  <span>{item}</span>
+                </motion.li>
+              ))}
+            </ul>
+            <p className="text-sm leading-relaxed text-[var(--muted)]">
+              {copy.complement}
+            </p>
+            <p className="font-mono text-[0.65rem] uppercase tracking-[0.24em] text-[var(--steel)]">
+              {copy.availability}
+            </p>
+          </div>
         </motion.aside>
       </div>
     </section>
