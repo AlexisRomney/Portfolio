@@ -1,5 +1,5 @@
 import type { MetadataRoute } from "next";
-import { locales } from "@/i18n/config";
+import { defaultLocale, locales } from "@/i18n/config";
 import { localePath } from "@/i18n/navigation";
 import { getSiteUrl } from "@/lib/site-url";
 
@@ -13,9 +13,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
     changeFrequency: "monthly" as const,
     priority: locale === "fr" ? 1 : 0.9,
     alternates: {
-      languages: Object.fromEntries(
-        locales.map((l) => [l, `${siteUrl}${localePath(l)}`]),
-      ),
+      languages: {
+        ...Object.fromEntries(
+          locales.map((l) => [l, `${siteUrl}${localePath(l)}`]),
+        ),
+        "x-default": `${siteUrl}${localePath(defaultLocale)}`,
+      },
     },
   }));
 
