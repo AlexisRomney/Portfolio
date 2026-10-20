@@ -33,11 +33,11 @@ export const projectsEn: Project[] = [
     visualTone: "ai",
     visuals: [
       {
-        src: "/mockups/assistant-demandes-dashboard.webp",
-        alt: "AI assistant dashboard: KPIs, categorization, and request routing",
+        src: "/brand/portfolio-hero-mockup.webp",
+        alt: "Alexis Romney portfolio preview: hero, positioning, and calls to action",
         width: 1024,
-        height: 430,
-        frame: "browser",
+        height: 427,
+        frame: "plain",
       },
     ],
   },

@@ -71,6 +71,8 @@ export function MockupFrame({
           width={width}
           height={height}
           priority={priority}
+          loading={priority ? undefined : "lazy"}
+          decoding="async"
           className="h-auto w-full object-contain"
           sizes="(max-width: 640px) 100vw, (max-width: 1024px) min(90vw, 896px), min(50vw, 720px)"
         />

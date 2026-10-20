@@ -2,8 +2,6 @@
 
 import { useEffect, useRef } from "react";
 import { useReducedMotion } from "motion/react";
-import gsap from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { getFeaturedProject } from "@/data/projects";
 import { useLocale, usePortfolioDictionary } from "@/components/providers/LocaleProvider";
 import { resolveDemoHref } from "@/lib/gestion-demandes-url";
@@ -21,27 +19,37 @@ export function FeaturedAI() {
   useEffect(() => {
     if (!project || reduce || !stageRef.current) return;
 
-    gsap.registerPlugin(ScrollTrigger);
-    const ctx = gsap.context(() => {
-      gsap.fromTo(
-        "[data-pipe]",
-        { opacity: 0.25, y: 18 },
-        {
-          opacity: 1,
-          y: 0,
-          stagger: 0.08,
-          ease: "power3.out",
-          scrollTrigger: {
-            trigger: stageRef.current,
-            start: "top 70%",
-            end: "bottom 55%",
-            scrub: 0.6,
-          },
-        },
-      );
-    }, stageRef);
+    let ctx: { revert: () => void } | null = null;
+    const stage = stageRef.current;
 
-    return () => ctx.revert();
+    void Promise.all([import("gsap"), import("gsap/ScrollTrigger")]).then(
+      ([{ default: gsap }, { ScrollTrigger }]) => {
+        if (!stageRef.current) return;
+        gsap.registerPlugin(ScrollTrigger);
+        ctx = gsap.context(() => {
+          gsap.fromTo(
+            "[data-pipe]",
+            { opacity: 0.25, y: 18 },
+            {
+              opacity: 1,
+              y: 0,
+              stagger: 0.08,
+              ease: "power3.out",
+              scrollTrigger: {
+                trigger: stage,
+                start: "top 70%",
+                end: "bottom 55%",
+                scrub: 0.6,
+              },
+            },
+          );
+        }, stage);
+      },
+    );
+
+    return () => {
+      ctx?.revert();
+    };
   }, [project, reduce]);
 
   if (!project) return null;

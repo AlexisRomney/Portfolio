@@ -1,11 +1,12 @@
 "use client";
 
 import { useRef } from "react";
-import { motion, useMotionTemplate, useMotionValue, useReducedMotion } from "motion/react";
+import { motion, useMotionTemplate, useMotionValue } from "motion/react";
 import { profile } from "@/data/profile";
 import { getLocalizedProfile } from "@/data/profile-locale";
 import { useLocale, usePortfolioDictionary } from "@/components/providers/LocaleProvider";
 import { ButtonLink } from "@/components/ui/ButtonLink";
+import { heroEase, heroStagger } from "@/lib/hero-motion";
 import { easeOut } from "@/lib/motion";
 import { usePrefersReducedMotion } from "@/lib/use-prefers-reduced-motion";
 
@@ -13,7 +14,7 @@ export function Hero() {
   const locale = useLocale();
   const dict = usePortfolioDictionary();
   const localizedProfile = getLocalizedProfile(locale);
-  const reduce = useReducedMotion();
+  const reduce = usePrefersReducedMotion();
   const ref = useRef<HTMLElement>(null);
   const mx = useMotionValue(50);
   const my = useMotionValue(40);
@@ -54,9 +55,9 @@ export function Hero() {
       <div className="mx-auto grid w-full max-w-6xl gap-10 lg:grid-cols-[1.12fr_0.88fr] lg:items-end lg:gap-x-16 lg:gap-y-12">
         <div className="min-w-0">
           <motion.p
-            initial={reduce ? false : { opacity: 0, y: 16 }}
+            initial={reduce ? false : { opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7, ease: easeOut }}
+            transition={{ ...heroStagger.role, ease: heroEase }}
             className="mb-6 font-mono text-[0.7rem] uppercase tracking-[0.32em] text-[var(--accent)]"
           >
             {localizedProfile.role}
@@ -67,22 +68,22 @@ export function Hero() {
           </h1>
 
           <p className="mt-5 font-display text-[clamp(2.2rem,7vw,4.5rem)] font-medium leading-[0.95] tracking-[-0.04em] text-[var(--paper)]">
-            <AnimatedLine text={profile.name} delay={0.15} />
+            <AnimatedLine text={profile.name} reduce={reduce} />
           </p>
 
           <motion.p
-            initial={reduce ? false : { opacity: 0, y: 20 }}
+            initial={reduce ? false : { opacity: 0, y: 12 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.55, ease: easeOut }}
+            transition={{ ...heroStagger.intro, ease: heroEase }}
             className="mt-8 max-w-xl text-lg leading-relaxed text-[var(--muted)] sm:text-xl"
           >
             {dict.hero.mainIntro}
           </motion.p>
 
           <motion.div
-            initial={reduce ? false : { opacity: 0, y: 16 }}
+            initial={reduce ? false : { opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7, delay: 0.75, ease: easeOut }}
+            transition={{ ...heroStagger.cta, ease: heroEase }}
             className="mt-10 flex max-w-xl flex-wrap gap-3"
           >
             <ButtonLink href="#contact">{dict.hero.ctaProject}</ButtonLink>
@@ -93,9 +94,9 @@ export function Hero() {
         </div>
 
         <motion.aside
-          initial={reduce ? false : { opacity: 0, x: 24 }}
+          initial={reduce ? false : { opacity: 0, x: 14 }}
           animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.9, delay: 0.45, ease: easeOut }}
+          transition={{ ...heroStagger.aside, ease: heroEase }}
           className="relative min-w-0 border-t border-white/12 pt-10 lg:border-l lg:border-t-0 lg:pl-14 lg:pt-1 xl:pl-16"
         >
           <div className="flex flex-col gap-7 lg:gap-8">
@@ -103,9 +104,13 @@ export function Hero() {
               {dict.hero.asideBullets.map((item, i) => (
                 <motion.li
                   key={item}
-                  initial={reduce ? false : { opacity: 0, x: 12 }}
+                  initial={reduce ? false : { opacity: 0, x: 8 }}
                   animate={{ opacity: 1, x: 0 }}
-                  transition={{ delay: 0.7 + i * 0.08, duration: 0.5, ease: easeOut }}
+                  transition={{
+                    delay: heroStagger.bulletBase + i * heroStagger.bulletStep,
+                    duration: 0.4,
+                    ease: easeOut,
+                  }}
                   className="flex items-start gap-3 text-sm leading-snug text-[var(--paper)]"
                 >
                   <span
@@ -129,8 +134,7 @@ export function Hero() {
   );
 }
 
-function AnimatedLine({ text, delay }: { text: string; delay: number }) {
-  const reduce = usePrefersReducedMotion();
+function AnimatedLine({ text, reduce }: { text: string; reduce: boolean }) {
   const words = text.split(" ");
 
   if (reduce) return <>{text}</>;
@@ -141,12 +145,12 @@ function AnimatedLine({ text, delay }: { text: string; delay: number }) {
         <span key={`${word}-${wi}`} className="mr-[0.22em] inline-block overflow-hidden align-bottom">
           <motion.span
             className="inline-block"
-            initial={{ y: "110%", opacity: 0 }}
+            initial={{ y: "55%", opacity: 0.35 }}
             animate={{ y: "0%", opacity: 1 }}
             transition={{
-              duration: 0.85,
-              delay: delay + wi * 0.12,
-              ease: easeOut,
+              duration: heroStagger.nameDuration,
+              delay: heroStagger.nameWordBase + wi * heroStagger.nameWordStep,
+              ease: heroEase,
             }}
           >
             {word}

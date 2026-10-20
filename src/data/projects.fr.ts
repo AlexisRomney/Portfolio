@@ -33,11 +33,11 @@ export const projectsFr: Project[] = [
     visualTone: "ai",
     visuals: [
       {
-        src: "/mockups/assistant-demandes-dashboard.webp",
-        alt: "Tableau de bord Assistant IA : KPIs, catégorisation et routage des demandes",
+        src: "/brand/portfolio-hero-mockup.webp",
+        alt: "Aperçu du portfolio Alexis Romney : hero, positionnement et appels à l’action",
         width: 1024,
-        height: 430,
-        frame: "browser",
+        height: 427,
+        frame: "plain",
       },
     ],
   },

@@ -2,8 +2,6 @@
 
 import { useEffect, useId, useRef, useState } from "react";
 import { AnimatePresence, motion } from "motion/react";
-import gsap from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
 import {
   getJourneyEducation,
   getJourneyExperiences,
@@ -27,44 +25,56 @@ export function Journey() {
 
   useEffect(() => {
     if (reduce || !trackRef.current || !lineRef.current) return;
-    gsap.registerPlugin(ScrollTrigger);
-    const ctx = gsap.context(() => {
-      gsap.fromTo(
-        lineRef.current,
-        { scaleY: 0 },
-        {
-          scaleY: 1,
-          ease: "none",
-          scrollTrigger: {
-            trigger: trackRef.current,
-            start: "top 65%",
-            end: "bottom 35%",
-            scrub: 0.55,
-          },
-        },
-      );
 
-      gsap.utils.toArray<HTMLElement>("[data-journey-item]").forEach((el) => {
-        gsap.fromTo(
-          el.querySelectorAll("[data-reveal-detail]"),
-          { opacity: 0, y: 14 },
-          {
-            opacity: 1,
-            y: 0,
-            stagger: 0.05,
-            duration: 0.5,
-            ease: "power2.out",
-            scrollTrigger: {
-              trigger: el,
-              start: "top 74%",
-              toggleActions: "play none none reverse",
+    const track = trackRef.current;
+    const line = lineRef.current;
+    let ctx: { revert: () => void } | null = null;
+
+    void Promise.all([import("gsap"), import("gsap/ScrollTrigger")]).then(
+      ([{ default: gsap }, { ScrollTrigger }]) => {
+        if (!trackRef.current || !lineRef.current) return;
+        gsap.registerPlugin(ScrollTrigger);
+        ctx = gsap.context(() => {
+          gsap.fromTo(
+            line,
+            { scaleY: 0 },
+            {
+              scaleY: 1,
+              ease: "none",
+              scrollTrigger: {
+                trigger: track,
+                start: "top 65%",
+                end: "bottom 35%",
+                scrub: 0.55,
+              },
             },
-          },
-        );
-      });
-    }, trackRef);
+          );
 
-    return () => ctx.revert();
+          gsap.utils.toArray<HTMLElement>("[data-journey-item]").forEach((el) => {
+            gsap.fromTo(
+              el.querySelectorAll("[data-reveal-detail]"),
+              { opacity: 0, y: 14 },
+              {
+                opacity: 1,
+                y: 0,
+                stagger: 0.05,
+                duration: 0.5,
+                ease: "power2.out",
+                scrollTrigger: {
+                  trigger: el,
+                  start: "top 74%",
+                  toggleActions: "play none none reverse",
+                },
+              },
+            );
+          });
+        }, track);
+      },
+    );
+
+    return () => {
+      ctx?.revert();
+    };
   }, [reduce]);
 
   const featured = journeyExperiences.filter((e) => e.emphasis === "featured");

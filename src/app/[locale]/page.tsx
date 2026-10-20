@@ -1,11 +1,28 @@
+import dynamic from "next/dynamic";
 import { Contact } from "@/components/sections/Contact";
 import { Expertise } from "@/components/sections/Expertise";
-import { FeaturedAI } from "@/components/sections/FeaturedAI";
 import { Hero } from "@/components/sections/Hero";
-import { Journey } from "@/components/sections/Journey";
-import { ProjectManagement } from "@/components/sections/ProjectManagement";
 import { Projects } from "@/components/sections/Projects";
-import { WindowsOptimizer } from "@/components/sections/WindowsOptimizer";
+
+const FeaturedAI = dynamic(() =>
+  import("@/components/sections/FeaturedAI").then((mod) => ({ default: mod.FeaturedAI })),
+);
+
+const WindowsOptimizer = dynamic(() =>
+  import("@/components/sections/WindowsOptimizer").then((mod) => ({
+    default: mod.WindowsOptimizer,
+  })),
+);
+
+const ProjectManagement = dynamic(() =>
+  import("@/components/sections/ProjectManagement").then((mod) => ({
+    default: mod.ProjectManagement,
+  })),
+);
+
+const Journey = dynamic(() =>
+  import("@/components/sections/Journey").then((mod) => ({ default: mod.Journey })),
+);
 
 export default function Home() {
   return (
